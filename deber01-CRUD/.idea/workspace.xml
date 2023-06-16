@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d5ec7a07-2017-4639-b4f9-da46f95543bd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../01-Android/app/src/main/java/com/example/movilescomputacion2023a/ACicloVida.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../01-Android/app/src/main/res/layout/activity_aciclo_vida.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../01-Android/app/src/main/res/values-en-land/color_en_land.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../01-Android/app/src/main/res/values-en-land/string_en_land.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../01-Android/app/src/main/res/values-en-port/color_en_port.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../01-Android/app/src/main/res/values-en-port/string_en_port.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../01-Android/app/src/main/res/values-es-land/color_es_land.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../01-Android/app/src/main/res/values-es-land/string_es_land.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../01-Android/app/src/main/res/values-es-port/string_es_port.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2RGk5J2nZNay0dwwp9ymezGqb3L" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/SS"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MainKt" />
+      <module name="deber01-CRUD.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Kotlin.MainKt" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d5ec7a07-2017-4639-b4f9-da46f95543bd" name="Changes" comment="" />
+      <created>1686883681404</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1686883681404</updated>
+      <workItem from="1686883683982" duration="3422000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
