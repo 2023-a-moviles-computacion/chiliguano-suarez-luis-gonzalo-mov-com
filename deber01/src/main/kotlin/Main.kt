@@ -5,6 +5,7 @@ import java.io.File
 import java.util.*
 import kotlinx.serialization.Serializable
 import kotlinx.datetime.LocalDate
+import kotlinx.serialization.decodeFromString
 
 
 fun main(args: Array<String>) {
@@ -27,7 +28,7 @@ fun main(args: Array<String>) {
     println(videojuego.multijugador)
     println(videojuego.precio)
     println(videojuego.consola.nombre)*/
-    val consolas = mutableListOf<Consola>()
+    /*val consolas = mutableListOf<Consola>()
 
     print("¿Cuántas consolas deseas agregar? ")
     val cantidadConsolas = readLine()?.toIntOrNull() ?: 0
@@ -38,7 +39,15 @@ fun main(args: Array<String>) {
         consolas.add(consola)
     }
 
-    guardarDatosEnArchivo(consolas)
+    guardarDatosEnArchivo(consolas)*/
+
+    //Leer datos
+    val consolas = leerDatosDesdeArchivo()
+    println("Consolas disponibles: ")
+    mostrarConsolas(consolas)
+
+    eliminarConsolaDesdeArchivo()
+
 
 
     /*val consola = ingresarDatosConsola()
@@ -149,6 +158,28 @@ fun imprimirDatosVideojuego(videojuego: Videojuego){
             "\nPrecio: " + videojuego.multijugador)
 }
 
+fun leerDatosDesdeArchivo(): MutableList<Consola> {
+    val file = File("data.json")
+
+    return if (file.exists()) {
+        val json = file.readText()
+        Json.decodeFromString<MutableList<Consola>>(json)
+    } else {
+        mutableListOf()
+    }
+}
+
+fun mostrarConsolas(consolas: List<Consola>) {
+    for ((indice, consola) in consolas.withIndex()) {
+        println("Índice: $indice " +
+                "\nConsola: ${consola.nombre}" +
+                "\nLanzamiento: ${consola.fecha}" +
+                "\n¿Está descontinuado?: ${consola.descontinuado}" +
+                "\nNúmero de mandos: ${consola.cantidadMandos}" +
+                "\nPrecio de lanzamiento: ${consola.precioLanzamiento}")
+    }
+}
+
 fun guardarDatosEnArchivo(consolas: List<Consola>){
     val json = Json.encodeToString(consolas)
 
@@ -157,5 +188,42 @@ fun guardarDatosEnArchivo(consolas: List<Consola>){
 
     println("Los datos se han guardado correctamente")
 
+}
+
+fun eliminarConsolaDesdeArchivo() {
+    val consolas = leerDatosDesdeArchivo()
+
+    println("Consolas disponibles:")
+    mostrarConsolas(consolas)
+
+        print("Índice de la consola a eliminar: ")
+        val indiceAEliminar = readLine()?.toIntOrNull() ?: -1
+
+        if (indiceAEliminar >= 0 && indiceAEliminar < consolas.size) {
+            consolas.removeAt(indiceAEliminar)
+            guardarDatosEnArchivo(consolas)
+            println("La consola ha sido eliminada correctamente.")
+        } else {
+            println("Índice inválido.")
+        }
+}
+
+fun editarConsolaDesdeArchivo() {
+    val consolas = leerDatosDesdeArchivo()
+
+    println("Consolas disponibles:")
+    mostrarConsolas(consolas)
+
+        print("Índice de la consola a editar: ")
+        val indiceAEditar = readLine()?.toIntOrNull() ?: -1
+
+        if (indiceAEditar >= 0 && indiceAEditar < consolas.size) {
+            val consolaEditada = ingresarDatosConsola()
+            consolas[indiceAEditar] = consolaEditada
+            guardarDatosEnArchivo(consolas)
+            println("La consola ha sido editada correctamente.")
+        } else {
+            println("Índice inválido.")
+        }
 
 }
