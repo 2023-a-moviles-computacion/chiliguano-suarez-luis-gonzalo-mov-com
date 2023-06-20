@@ -10,55 +10,76 @@ import kotlinx.serialization.decodeFromString
 
 fun main(args: Array<String>) {
 
+    println("Bienvenido al programa de administración de consolas")
 
-   /* val nintedo64 = Consola("Nintendo 64", LocalDate.of(1996, 5, 16), true, 4, 199.0)
-    println("CONSOLA")
-    println(nintedo64.nombre)
-    println(nintedo64.fecha)
-    println(nintedo64.descontinuado)
-    println(nintedo64.cantidadMandos)
-    println(nintedo64.precioLanzamiento)
+    var continuar = true
+    val consolas = leerDatosDesdeArchivo()
 
+    while (continuar) {
+        println("Seleccione una opción:")
+        println("1. Agregar una consola")
+        println("2. Eliminar una consola")
+        println("3. Editar una consola")
+        println("4. Agregar un videojuego")
+        println("5. Eliminar un videojuego")
+        println("6. Editar un videojuego")
+        println("7. Salir")
 
-    val videojuego = Videojuego("Super Mario 64", LocalDate.of(1996,6,15), "Nintendo", false, 59.99, nintedo64)
-    println("VIDEOJUEGO")
-    println(videojuego.nombre)
-    println(videojuego.lanzamiento)
-    println(videojuego.desarrollador)
-    println(videojuego.multijugador)
-    println(videojuego.precio)
-    println(videojuego.consola.nombre)*/
-    /*val consolas = mutableListOf<Consola>()
+        val opcion = readLine()?.toIntOrNull()
 
-    print("¿Cuántas consolas deseas agregar? ")
-    val cantidadConsolas = readLine()?.toIntOrNull() ?: 0
+        when (opcion) {
 
-    for (i in 1..cantidadConsolas) {
-        println("Consola $i:")
-        val consola = ingresarDatosConsola()
-        consolas.add(consola)
+            1 -> {
+                println("Consolas Disponibles:")
+                mostrarConsolas(consolas)
+
+                print("¿Cuántas consolas deseas agregar? ")
+                val cantidadConsolas = readLine()?.toIntOrNull() ?: 0
+
+                for (i in 1..cantidadConsolas) {
+                    println("Consola $i:")
+                    val consola = ingresarDatosConsola()
+                    consolas.add(consola)
+                }
+
+                guardarDatosEnArchivo(consolas)
+
+            }
+            2 -> {
+                eliminarConsolaDesdeArchivo()
+            }
+
+            3 -> {
+                editarConsolaDesdeArchivo()
+            }
+
+            4 -> {
+                agregarVideojuegoPorIndice(consolas)
+                guardarDatosEnArchivo(consolas)
+            }
+
+            5 -> {
+                eliminarVideojuegoPorIndice(consolas)
+                guardarDatosEnArchivo(consolas)
+
+            }
+
+            6 -> {
+                editarVideojuegoPorIndice(consolas)
+                guardarDatosEnArchivo(consolas)
+
+            }
+
+            7 -> {
+                continuar = false
+            }
+            else -> {
+                println("Opción inválida. Por favor, seleccione una opción válida.")
+            }
+        }
     }
 
-    guardarDatosEnArchivo(consolas)*/
-
-    //Leer datos
-    val consolas = leerDatosDesdeArchivo()
-    println("Consolas disponibles: ")
-    mostrarConsolas(consolas)
-
-    eliminarConsolaDesdeArchivo()
-
-
-
-    /*val consola = ingresarDatosConsola()
-
-    consolas.add(consola)
-   /* for (i in 0 until consola.listaVideojuegos.size) {
-        val videojuego = consola.listaVideojuegos[i]
-        println("Videojuego ${i + 1}: ${videojuego.nombre}")
-    }*/
-
-    guardarDatosEnArchivo(consolas)*/
+    println("¡Hasta luego!")
 }
 
 @Serializable
@@ -68,7 +89,7 @@ data class Consola(
     val descontinuado: Boolean,
     val cantidadMandos: Int,
     val precioLanzamiento: Double,
-    val listaVideojuegos: MutableList<Videojuego> = mutableListOf() //Creando lista de videojuegos por consola
+    val listaVideojuegos: MutableList<Videojuego> = mutableListOf() //Una consola tendrá una lista de videojuegos
 )
 @Serializable
 data class Videojuego(
@@ -100,18 +121,7 @@ fun ingresarDatosConsola(): Consola {
     println("Ingrese el precio de lanzamiento de la consola: ")
     val precioLanzamiento = scanner.nextDouble()
 
-
-
     val consola = Consola(nombre, fecha, descontinuado, cantidadMandos, precioLanzamiento)
-
-    print("¿Cuántos videojuegos deseas agregar a la consola? ")
-    val cantidadVideojuegos = scanner.nextInt()
-
-    for (i in 1..cantidadVideojuegos) {
-        println("Ingresando datos del Videojuego $i:")
-        val videojuego = ingresarDatosVideojuego()
-        consola.listaVideojuegos.add(videojuego)
-    }
 
     return consola
 }
@@ -172,13 +182,14 @@ fun leerDatosDesdeArchivo(): MutableList<Consola> {
 fun mostrarConsolas(consolas: List<Consola>) {
     for ((indice, consola) in consolas.withIndex()) {
         println("Índice: $indice " +
-                "\nConsola: ${consola.nombre}" +
-                "\nLanzamiento: ${consola.fecha}" +
-                "\n¿Está descontinuado?: ${consola.descontinuado}" +
-                "\nNúmero de mandos: ${consola.cantidadMandos}" +
-                "\nPrecio de lanzamiento: ${consola.precioLanzamiento}")
+                "\n\tConsola: ${consola.nombre}" +
+                "\n\tLanzamiento: ${consola.fecha}" +
+                "\n\t¿Está descontinuado?: ${consola.descontinuado}" +
+                "\n\tNúmero de mandos: ${consola.cantidadMandos}" +
+                "\n\tPrecio de lanzamiento: ${consola.precioLanzamiento}")
     }
 }
+
 
 fun guardarDatosEnArchivo(consolas: List<Consola>){
     val json = Json.encodeToString(consolas)
@@ -227,3 +238,127 @@ fun editarConsolaDesdeArchivo() {
         }
 
 }
+
+fun agregarVideojuegoPorIndice(consolas: MutableList<Consola>) {
+    val scanner = Scanner(System.`in`)
+
+    // Mostrar la lista de consolas
+    println("Consolas disponibles:")
+    mostrarConsolas(consolas)
+
+    // Solicitar el índice de la consola
+    print("Ingresa el índice de la consola a la cual quieres agregar un videojuego: ")
+    val indiceConsola = scanner.nextInt()
+
+    // Verificar si el índice es válido
+    if (indiceConsola in 0 until consolas.size) {
+        val consola = consolas[indiceConsola]
+
+        // Solicitar el número de videojuegos que desea ingresar
+        println("Ingresa el número de videojuegos que desea agregar")
+        val numeroVideojuegos = scanner.nextInt()
+
+        for(i in 1..numeroVideojuegos){
+            println("Ingresando datos del Videojuego:")
+            val videojuego = ingresarDatosVideojuego()
+
+            // Agregar el videojuego a la consola
+            consola.listaVideojuegos.add(videojuego)
+
+            println("El videojuego $i se ha agregado correctamente a la consola ${consola.nombre}.")
+        }
+
+    } else {
+        println("El índice de la consola no es válido.")
+    }
+}
+
+fun eliminarVideojuegoPorIndice(consolas: List<Consola>) {
+    val scanner = Scanner(System.`in`)
+
+    // Mostrar la lista de consolas
+    println("Consolas disponibles:")
+    mostrarConsolas(consolas)
+
+    print("Ingresa el índice de la consola de la cual quieres eliminar un videojuego: ")
+    val indiceConsola = scanner.nextInt()
+
+    // Verificar si el índice es válido
+    if (indiceConsola in 0 until consolas.size) {
+        val consola = consolas[indiceConsola]
+
+        // Verificar si la consola tiene videojuegos
+        if (consola.listaVideojuegos.isNotEmpty()) {
+            println("Lista de videojuegos de la consola ${consola.nombre}:")
+            for ((index, videojuego) in consola.listaVideojuegos.withIndex()) {
+                println("\t$index. ${videojuego.nombre}")
+            }
+
+            print("Ingresa el índice del videojuego que deseas eliminar: ")
+            val indiceVideojuego = scanner.nextInt()
+
+            // Verificar si el índice del videojuego es válido
+            if (indiceVideojuego in 0 until consola.listaVideojuegos.size) {
+                val videojuego = consola.listaVideojuegos[indiceVideojuego]
+                consola.listaVideojuegos.removeAt(indiceVideojuego)
+                println("El videojuego ${videojuego.nombre} se ha eliminado correctamente de la consola ${consola.nombre}.")
+            } else {
+                println("El índice del videojuego no es válido.")
+            }
+        } else {
+            println("La consola ${consola.nombre} no tiene videojuegos.")
+        }
+    } else {
+        println("El índice de la consola no es válido.")
+    }
+}
+
+fun editarVideojuegoPorIndice(consolas: List<Consola>) {
+    val scanner = Scanner(System.`in`)
+
+    // Mostrar la lista de consolas
+    println("Consolas disponibles:")
+    mostrarConsolas(consolas)
+
+    print("Ingresa el índice de la consola de la cual quieres editar un videojuego: ")
+    val indiceConsola = scanner.nextInt()
+
+    // Verificar si el índice es válido
+    if (indiceConsola in 0 until consolas.size) {
+        val consola = consolas[indiceConsola]
+
+        // Verificar si la consola tiene videojuegos
+        if (consola.listaVideojuegos.isNotEmpty()) {
+            println("Lista de videojuegos de la consola ${consola.nombre}:")
+            for ((index, videojuego) in consola.listaVideojuegos.withIndex()) {
+                println("\t$index. ${videojuego.nombre}")
+            }
+
+            print("Ingresa el índice del videojuego que deseas editar: ")
+            val indiceVideojuego = scanner.nextInt()
+
+            // Verificar si el índice del videojuego es válido
+            if (indiceVideojuego in 0 until consola.listaVideojuegos.size) {
+                val videojuego = consola.listaVideojuegos[indiceVideojuego]
+
+                // Solicitar los nuevos datos del videojuego
+                println("Ingresando nuevos datos para el videojuego ${videojuego.nombre}:")
+                val nuevoVideojuego = ingresarDatosVideojuego()
+
+                // Actualizar los datos del videojuego
+                consola.listaVideojuegos[indiceVideojuego] = nuevoVideojuego
+
+                println("El videojuego ${videojuego.nombre} se ha actualizado correctamente en la consola ${consola.nombre}.")
+            } else {
+                println("El índice del videojuego no es válido.")
+            }
+        } else {
+            println("La consola ${consola.nombre} no tiene videojuegos.")
+        }
+    } else {
+        println("El índice de la consola no es válido.")
+    }
+}
+
+
+
