@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
         when (opcion) {
 
             1 -> {
-                println("Consolas Disponibles:")
+                /*println("Consolas Disponibles:")
                 mostrarConsolas(consolas)
 
                 print("¿Cuántas consolas deseas agregar? ")
@@ -40,7 +40,8 @@ fun main(args: Array<String>) {
                     println("Consola $i:")
                     val consola = ingresarDatosConsola()
                     consolas.add(consola)
-                }
+                }*/
+                agregarConsolaAArchivo(consolas)
 
                 guardarDatosEnArchivo(consolas)
 
@@ -150,23 +151,6 @@ fun ingresarDatosVideojuego(): Videojuego {
     return Videojuego(nombre, lanzamiento, desarrollador, multijugador, precio)
 }
 
-fun imprimirDatosConsola(consola: Consola){
-    println("CONSOLA" +
-    "\nNombre consola: " + consola.nombre +
-    "\nFecha de lanzamiento: " + consola.fecha +
-    "\n¿Está descontinuado?: " + consola.descontinuado +
-    "\nNúmero de mandos: " + consola.cantidadMandos +
-    "\nPrecio de lanzamiento: " + consola.precioLanzamiento)
-}
-
-fun imprimirDatosVideojuego(videojuego: Videojuego){
-    println("VIDEOJUEGO" +
-            "\nNombre videojuego: " + videojuego.nombre +
-            "\nFecha de lanzamiento: " + videojuego.lanzamiento +
-            "\nDesarrollado por: " + videojuego.desarrollador +
-            "\n¿Tiene multijugador?: " + videojuego.multijugador +
-            "\nPrecio: " + videojuego.multijugador)
-}
 
 fun leerDatosDesdeArchivo(): MutableList<Consola> {
     val file = File("data.json")
@@ -199,6 +183,21 @@ fun guardarDatosEnArchivo(consolas: List<Consola>){
 
     println("Los datos se han guardado correctamente")
 
+}
+
+fun agregarConsolaAArchivo(consolas: MutableList<Consola>){
+
+    println("Consolas Disponibles:")
+    mostrarConsolas(consolas)
+
+    print("¿Cuántas consolas deseas agregar? ")
+    val cantidadConsolas = readLine()?.toIntOrNull() ?: 0
+
+    for (i in 1..cantidadConsolas) {
+        println("Consola $i:")
+        val consola = ingresarDatosConsola()
+        consolas.add(consola)
+    }
 }
 
 fun eliminarConsolaDesdeArchivo() {
