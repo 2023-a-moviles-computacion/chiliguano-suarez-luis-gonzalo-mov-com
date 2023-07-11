@@ -1,5 +1,6 @@
 package com.example.movilescomputacion2023a
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextMenu
@@ -34,6 +35,7 @@ class BListView : AppCompatActivity() {
             .setOnClickListener {
                 anadirEntrenador(adaptador)
             }
+        registerForContextMenu(listView)
 
     }
 
@@ -85,7 +87,8 @@ class BListView : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Desea eliminar")
         builder.setPositiveButton(
-            "Aceptar", { dialog, which ->
+            "Aceptar",
+            { dialog, which ->
                 //Al aceptar elimnara el registro
             }
         )
@@ -108,7 +111,7 @@ class BListView : AppCompatActivity() {
             { dialog,
               which,
               isChecked ->
-                "Dio clic en elitem ${which}"
+                "Dio clic en el item ${which}"
             }
         )
 
