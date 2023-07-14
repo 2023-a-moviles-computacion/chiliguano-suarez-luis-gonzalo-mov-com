@@ -157,8 +157,9 @@ class ESqliteHelperVideojuego(
                 val desarrollador = resultadoConsultaLectura.getString(3)
                 val multijugadorOnline = resultadoConsultaLectura.getString(4)
                 val precioLanzamiento = resultadoConsultaLectura.getDouble(5)
+                val consolaID = resultadoConsultaLectura.getInt(6)
 
-                val videojuego = BVideojuegos(id, nombre, lanzamiento, desarrollador, multijugadorOnline, precioLanzamiento, consolaId)
+                val videojuego = BVideojuegos(id, nombre, lanzamiento, desarrollador, multijugadorOnline, precioLanzamiento, consolaID)
                 arregloVideojuegos.add(videojuego)
             } while (resultadoConsultaLectura.moveToNext())
         }

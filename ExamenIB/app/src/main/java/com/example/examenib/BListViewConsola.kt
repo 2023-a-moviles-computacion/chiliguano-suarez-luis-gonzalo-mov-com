@@ -7,7 +7,6 @@ import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.core.content.ContextCompat.startActivity
 
 class BListViewConsola : AppCompatActivity() {
     private lateinit var  arreglo: ArrayAdapter<BConsola>
@@ -21,6 +20,8 @@ class BListViewConsola : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blist_view_consola)
+
+        EBaseDeDatos.coBDatos2 = ESqliteHelperVideojuego(this)
 
         //Obtener las consolas desde la base de datos
         consolas = obtenerConsolasDesdeLaBaseDeDatos()
@@ -84,6 +85,9 @@ class BListViewConsola : AppCompatActivity() {
 
         return when (item.itemId){
             R.id.op_editar ->{
+                val intent = Intent(this, EEditarConsola::class.java)
+                intent.putExtra("consolaID", idSeleccionado)
+                startActivity(intent)
 
                 return true
             }
@@ -100,7 +104,9 @@ class BListViewConsola : AppCompatActivity() {
                 return true
             }
             R.id.op_ver_juegos ->{
-
+                val intent = Intent(this, BListViewVideojuegos::class.java)
+                intent.putExtra("consolaID", idSeleccionado)
+                startActivity(intent)
                 return true
             }
 

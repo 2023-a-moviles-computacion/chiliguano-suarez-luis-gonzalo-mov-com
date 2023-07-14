@@ -13,6 +13,11 @@
         android:theme="@style/Theme.ExamenIB"
         tools:targetApi="31">
         <activity
+            android:name=".EEditarConsola"
+            android:exported="false"
+            android:label="@string/title_activity_eeditar_consola"
+            android:theme="@style/Theme.ExamenIB" />
+        <activity
             android:name=".ECrudVideojuego"
             android:exported="false">
             <meta-data

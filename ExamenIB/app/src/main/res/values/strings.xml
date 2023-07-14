@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ExamenIB</string>
+    <string name="title_activity_eeditar_consola">EEditarConsola</string>
 </resources>

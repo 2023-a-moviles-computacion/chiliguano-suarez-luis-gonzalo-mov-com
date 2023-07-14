@@ -11,9 +11,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Base de datos sqlite
-        EBaseDeDatos.tablaConsola = ESqliteHelperConsola(this)
-        //Base de datos sqlite
-        EBaseDeDatos.tablaVideojuegos = ESqliteHelperVideojuego(this)
+        EBaseDeDatos.coBDatos = ESqliteHelperConsola(this)
+        EBaseDeDatos.coBDatos2 = ESqliteHelperVideojuego(this)
 
         val btnListView = findViewById<Button>(R.id.btn_abrir)
         btnListView.setOnClickListener { irActividad(BListViewConsola::class.java) }

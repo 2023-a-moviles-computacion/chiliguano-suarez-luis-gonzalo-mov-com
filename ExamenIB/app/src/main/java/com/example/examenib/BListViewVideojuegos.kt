@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 
 class BListViewVideojuegos : AppCompatActivity() {
 
@@ -16,31 +17,32 @@ class BListViewVideojuegos : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blist_view_videojuegos)
 
-        // Obtener la lista de videojuegos relacionados a la consola seleccionada
-        videojuegos = obtenerVideojuegosPorConsolaId()
 
-        // Configurar el adaptador para la lista de videojuegos
-        val listView = findViewById<ListView>(R.id.lv_videojuegos)
-        arreglo = ArrayAdapter(
-            this, //contexto
-            android.R.layout.simple_list_item_1,
-            videojuegos
-        )
+        val consolaID = intent.getIntExtra("consolaID", -1)
 
-        listView.adapter = arreglo
-        arreglo.notifyDataSetChanged()
+        if(consolaID != -1){
+            videojuegos = obtenerVideojuegosDeConsola(consolaID)
 
-        registerForContextMenu(listView)
+            val listView = findViewById<ListView>(R.id.lv_videojuegos)
+            arreglo = ArrayAdapter(this, android.R.layout.simple_list_item_1, videojuegos)
+            listView.adapter = arreglo
+            arreglo.notifyDataSetChanged()
+        } else{
+            Toast.makeText(this, "Error al obtener el ID de la consola", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 
-    private fun obtenerVideojuegosPorConsolaId(): ArrayList<BVideojuegos> {
-        val dbHelper = ESqliteHelperVideojuego(this)
-        // Aquí obtienes los videojuegos según el ID de la consola recibido en el intent
-        val consolaId = intent.getIntExtra("consolaId", 1)
-        val videojuegos = dbHelper.obtenerVideojuegosDeConsola(consolaId)
-        dbHelper.close()
+    private fun obtenerVideojuegosDeConsola(consolaId: Int): ArrayList<BVideojuegos> {
+        val dbHelperVideojuegos = ESqliteHelperVideojuego(this)
+        val videojuegos = dbHelperVideojuegos.obtenerVideojuegosDeConsola(consolaId)
+        dbHelperVideojuegos.close()
         return videojuegos
     }
+
+
+
 
     fun irActividad(
         clase: Class<*>,

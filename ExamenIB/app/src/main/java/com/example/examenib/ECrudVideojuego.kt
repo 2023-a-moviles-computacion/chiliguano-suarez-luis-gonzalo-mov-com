@@ -23,7 +23,7 @@ class ECrudVideojuego : AppCompatActivity() {
                 val desarrollador = findViewById<EditText>(R.id.input_desarrollador_videojuego)
                 val multijugadorOnline = findViewById<EditText>(R.id.input_online_videojuego)
                 val precio = findViewById<EditText>(R.id.input_precio_videojuego)
-                EBaseDeDatos.tablaVideojuegos!!.crearVideojuego(
+                EBaseDeDatos.coBDatos2!!.crearVideojuego(
                     nombre.text.toString(),
                     fechaLanzamiento.text.toString(),
                     desarrollador.text.toString(),
