@@ -20,11 +20,11 @@ class ESqliteHelperVideojuego(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre VARCHAR(50),
                 fechaLanzamiento VARCHAR(50),
-                desarrollador VARCHAR(10),
+                desarrollador VARCHAR(50),
                 multijugadorOnline VARCHAR(10),
                 precioLanzamiento DOUBLE,
                 consolaID INTEGER,
-                FOREIGN KEY (consolaID) REFERENCES CONSOLA (id) ON DELETE CASCADE
+                FOREIGN KEY (consolaID) REFERENCES CONSOLA(id) ON DELETE CASCADE 
                 )
             
             """.trimIndent()
@@ -112,7 +112,7 @@ class ESqliteHelperVideojuego(
         )
 
         val existeVideojuego = resultadoConsultaLectura.moveToFirst()
-        val vieojuegoEncontrado = BVideojuegos(0, "", "", "", "", 0.0)
+        val vieojuegoEncontrado = BVideojuegos(0, "", "", "", "", 0.0, 0)
         val arreglo = arrayListOf<BVideojuegos>()
         if(existeVideojuego){
             do{
@@ -158,7 +158,7 @@ class ESqliteHelperVideojuego(
                 val multijugadorOnline = resultadoConsultaLectura.getString(4)
                 val precioLanzamiento = resultadoConsultaLectura.getDouble(5)
 
-                val videojuego = BVideojuegos(id, nombre, lanzamiento, desarrollador, multijugadorOnline, precioLanzamiento)
+                val videojuego = BVideojuegos(id, nombre, lanzamiento, desarrollador, multijugadorOnline, precioLanzamiento, consolaId)
                 arregloVideojuegos.add(videojuego)
             } while (resultadoConsultaLectura.moveToNext())
         }

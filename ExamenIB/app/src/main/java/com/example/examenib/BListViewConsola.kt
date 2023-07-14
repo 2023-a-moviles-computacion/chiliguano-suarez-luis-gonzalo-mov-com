@@ -3,15 +3,20 @@ package com.example.examenib
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
+import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 
 class BListViewConsola : AppCompatActivity() {
     private lateinit var  arreglo: ArrayAdapter<BConsola>
     private lateinit var  consolas: ArrayList<BConsola>
 
-    var idItemSeleccionado = 0
+
+
+    //var idItemSeleccionado = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -32,6 +37,7 @@ class BListViewConsola : AppCompatActivity() {
 
         listView.adapter = arreglo
         arreglo.notifyDataSetChanged()
+
         registerForContextMenu(listView)
 
 
@@ -40,6 +46,7 @@ class BListViewConsola : AppCompatActivity() {
             .setOnClickListener{
                 irActividad(ECrudConsola::class.java)
             }
+
     }
 
     override fun onResume() {
@@ -58,12 +65,64 @@ class BListViewConsola : AppCompatActivity() {
         arreglo.notifyDataSetChanged()
     }
 
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        val posicionSeleccionada = info.position
+        val consolaSeleccionada = consolas[posicionSeleccionada]
+        val idSeleccionado = consolaSeleccionada.id
+
+        return when (item.itemId){
+            R.id.op_editar ->{
+
+                return true
+            }
+            R.id.op_eliminar ->{
+             if(eliminarConsola(idSeleccionado)){
+                 Toast.makeText(this, "Elemento eliminado", Toast.LENGTH_SHORT).show()
+                 consolas.removeAt(posicionSeleccionada)
+                 arreglo.notifyDataSetChanged()
+             } else
+             {
+                 Toast.makeText(this, "Error al eliminar el elemento", Toast.LENGTH_SHORT).show()
+             }
+
+                return true
+            }
+            R.id.op_ver_juegos ->{
+
+                return true
+            }
+
+            else -> super.onContextItemSelected(item)
+        }
+
+    }
+
     private fun obtenerConsolasDesdeLaBaseDeDatos(): ArrayList<BConsola> {
         val dbHelper = ESqliteHelperConsola(this)
         val consolas = dbHelper.obtenerTodasLasConsolas()
         dbHelper.close()
         return consolas
     }
+
+    private fun eliminarConsola(id: Int): Boolean {
+        val dbHelper = ESqliteHelperConsola(this)
+        val conf = dbHelper.eliminarConsolaFormulario(id)
+        dbHelper.close()
+        return conf
+    }
+
 
 
 
