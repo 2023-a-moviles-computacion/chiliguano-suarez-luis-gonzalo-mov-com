@@ -9,8 +9,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //Base de datos sqlite
+        EBaseDeDatos.tablaConsola = ESqliteHelperConsola(this)
         val btnListView = findViewById<Button>(R.id.btn_abrir)
         btnListView.setOnClickListener { irActividad(BListViewConsola::class.java) }
+
+
     }
 
 

@@ -1,64 +1,76 @@
 package com.example.examenib
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ContextMenu
-import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
 
 class BListViewConsola : AppCompatActivity() {
-    val arregloConsolas = BBaseDatosMemoria.arregloConsolas
+    private lateinit var  arreglo: ArrayAdapter<BConsola>
+    private lateinit var  consolas: ArrayList<BConsola>
+
+    var idItemSeleccionado = 0
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blist_view_consola)
 
-        val listView = findViewById<ListView>(R.id.lv_lista)
-        val adaptador = ArrayAdapter(
-            this,
+        //Obtener las consolas desde la base de datos
+        consolas = obtenerConsolasDesdeLaBaseDeDatos()
+
+
+
+        val listView = findViewById<ListView>(R.id.lv_consolas)
+        arreglo = ArrayAdapter(
+            this, //contexto
             android.R.layout.simple_list_item_1,
-            arregloConsolas
+            consolas
         )
-        listView.adapter = adaptador
-        adaptador.notifyDataSetChanged()
 
+
+        listView.adapter = arreglo
+        arreglo.notifyDataSetChanged()
         registerForContextMenu(listView)
+
+
+        val botonListView = findViewById<Button>(R.id.btn_ir_crear_consola)
+        botonListView
+            .setOnClickListener{
+                irActividad(ECrudConsola::class.java)
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Obtén las consolas actualizadas desde la base de datos
+        val consolasActualizadas = obtenerConsolasDesdeLaBaseDeDatos()
+
+        // Borra los elementos del adaptador actual
+        arreglo.clear()
+
+        // Agrega las consolas actualizadas al adaptador
+        arreglo.addAll(consolasActualizadas)
+
+        // Notifica al adaptador que los datos han cambiado
+        arreglo.notifyDataSetChanged()
+    }
+
+    private fun obtenerConsolasDesdeLaBaseDeDatos(): ArrayList<BConsola> {
+        val dbHelper = ESqliteHelperConsola(this)
+        val consolas = dbHelper.obtenerTodasLasConsolas()
+        dbHelper.close()
+        return consolas
     }
 
 
 
-    override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
+    fun irActividad(
+        clase: Class<*>
     ){
-        super.onCreateContextMenu(menu, v, menuInfo)
-        //Llenamos las opciones del menu
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
-    }
-
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
-        val positionItemSeleccionado = info.position
-        return when (item.itemId){
-            R.id.op_editar ->{
-               // "${idItemSeleccionado}"
-                return true
-            }
-            R.id.op_eliminar ->{
-                //"${idItemSeleccionado}"
-               //abrirDialogo()
-                return true
-            }
-            R.id.op_ver_juegos ->{
-
-                return true
-            }
-
-            else -> super.onContextItemSelected(item)
-        }
+        val intent = Intent(this, clase)
+        startActivity(intent)
     }
 }

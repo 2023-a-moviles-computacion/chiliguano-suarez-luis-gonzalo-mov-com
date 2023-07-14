@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "53937052340",
+    "project_id": "a-mov-com-lgcs",
+    "storage_bucket": "a-mov-com-lgcs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53937052340:android:0f176d1ae4ce4ef08395e1",
+        "android_client_info": {
+          "package_name": "com.example.examenib"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53937052340-hlrs7cnvfadb88dm7b16d2fa0k0su6pt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhCqc1PEAFQL0DrL54NhBeAaEMbxePkdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53937052340-hlrs7cnvfadb88dm7b16d2fa0k0su6pt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53937052340:android:bd14b904d72ad7868395e1",
+        "android_client_info": {
+          "package_name": "com.example.movilescomputacion2023a"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53937052340-hlrs7cnvfadb88dm7b16d2fa0k0su6pt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhCqc1PEAFQL0DrL54NhBeAaEMbxePkdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53937052340-hlrs7cnvfadb88dm7b16d2fa0k0su6pt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

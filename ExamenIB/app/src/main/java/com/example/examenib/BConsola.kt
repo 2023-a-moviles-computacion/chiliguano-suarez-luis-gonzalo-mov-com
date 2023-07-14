@@ -11,6 +11,7 @@ class BConsola(
 
     override fun toString(): String {
         return "ID: ${id}" +
+                "\nNombre: ${nombre}" +
                 "\nLanzamiento: ${fechaLanzamiento}" +
                 "\nDescontinuado: ${descontinuado}" +
                 "\nCantidad de Mandos: ${cantidadMandos}" +
