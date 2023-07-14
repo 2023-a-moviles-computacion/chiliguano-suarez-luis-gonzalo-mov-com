@@ -21,8 +21,6 @@ class BListViewConsola : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blist_view_consola)
 
-        EBaseDeDatos.coBDatos2 = ESqliteHelperVideojuego(this)
-
         //Obtener las consolas desde la base de datos
         consolas = obtenerConsolasDesdeLaBaseDeDatos()
 
@@ -116,14 +114,14 @@ class BListViewConsola : AppCompatActivity() {
     }
 
     private fun obtenerConsolasDesdeLaBaseDeDatos(): ArrayList<BConsola> {
-        val dbHelper = ESqliteHelperConsola(this)
+        val dbHelper = ESqliteHelper(this)
         val consolas = dbHelper.obtenerTodasLasConsolas()
         dbHelper.close()
         return consolas
     }
 
     private fun eliminarConsola(id: Int): Boolean {
-        val dbHelper = ESqliteHelperConsola(this)
+        val dbHelper = ESqliteHelper(this)
         val conf = dbHelper.eliminarConsolaFormulario(id)
         dbHelper.close()
         return conf

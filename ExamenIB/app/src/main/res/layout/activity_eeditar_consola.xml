@@ -6,83 +6,83 @@
     android:layout_height="match_parent"
     tools:context=".EEditarConsola">
 
+    <EditText
+        android:id="@+id/input_nombre_editar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nombre"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112" />
 
     <EditText
         android:id="@+id/input_lanzamiento_editar"
-        android:layout_width="231dp"
-        android:layout_height="44dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:hint="Lanzamiento (dd-mm-aaa)"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.304" />
-
-    <EditText
-        android:id="@+id/input_nombre_editar"
-        android:layout_width="230dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:hint="Nombre"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/input_lanzamiento_editar"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.731" />
+        app:layout_constraintTop_toBottomOf="@+id/input_nombre_editar" />
 
     <EditText
         android:id="@+id/input_descontinuado_editar"
-        android:layout_width="230dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Descontinuado (SI/NO)"
-        android:inputType="textPersonName"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_lanzamiento_editar" />
+        app:layout_constraintTop_toBottomOf="@+id/input_lanzamiento_editar"
+        app:layout_constraintVertical_bias="0.153" />
 
     <EditText
-        android:id="@+id/input_mandos_editar"
-        android:layout_width="230dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="40dp"
+        android:id="@+id/id_mandos_editar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
         android:ems="10"
         android:hint="Mandos (Entero)"
-        android:inputType="textPersonName"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_descontinuado_editar" />
 
+    <EditText
+        android:id="@+id/input_precio_editar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:ems="10"
+        android:hint="Precio (Double)"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_mandos_editar" />
+
     <Button
         android:id="@+id/btn_editar_consola"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Editar Consola"
+        android:layout_marginTop="44dp"
+        android:text="Editar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_precio_editar"
-        app:layout_constraintVertical_bias="0.353" />
-
-    <EditText
-        android:id="@+id/input_precio_editar"
-        android:layout_width="230dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="Precio (Double)"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_mandos_editar" />
-
+        app:layout_constraintVertical_bias="0.321" />
 </androidx.constraintlayout.widget.ConstraintLayout>

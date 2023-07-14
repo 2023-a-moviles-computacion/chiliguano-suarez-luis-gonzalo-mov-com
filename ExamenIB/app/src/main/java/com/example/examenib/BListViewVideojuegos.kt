@@ -4,14 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
 
 class BListViewVideojuegos : AppCompatActivity() {
 
-    private lateinit var  arreglo: ArrayAdapter<BVideojuegos>
-    private lateinit var  videojuegos: ArrayList<BVideojuegos>
+    private lateinit var  arreglo: ArrayAdapter<BVideojuego>
+    private lateinit var  videojuegos: ArrayList<BVideojuego>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +33,8 @@ class BListViewVideojuegos : AppCompatActivity() {
 
     }
 
-    private fun obtenerVideojuegosDeConsola(consolaId: Int): ArrayList<BVideojuegos> {
-        val dbHelperVideojuegos = ESqliteHelperVideojuego(this)
+    private fun obtenerVideojuegosDeConsola(consolaId: Int): ArrayList<BVideojuego> {
+        val dbHelperVideojuegos = ESqliteHelper(this)
         val videojuegos = dbHelperVideojuegos.obtenerVideojuegosDeConsola(consolaId)
         dbHelperVideojuegos.close()
         return videojuegos

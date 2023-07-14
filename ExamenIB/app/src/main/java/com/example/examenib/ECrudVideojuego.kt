@@ -23,7 +23,7 @@ class ECrudVideojuego : AppCompatActivity() {
                 val desarrollador = findViewById<EditText>(R.id.input_desarrollador_videojuego)
                 val multijugadorOnline = findViewById<EditText>(R.id.input_online_videojuego)
                 val precio = findViewById<EditText>(R.id.input_precio_videojuego)
-                EBaseDeDatos.coBDatos2!!.crearVideojuego(
+                EBaseDeDatos.coBDatos!!.crearVideojuego(
                     nombre.text.toString(),
                     fechaLanzamiento.text.toString(),
                     desarrollador.text.toString(),
@@ -42,7 +42,7 @@ class ECrudVideojuego : AppCompatActivity() {
 
     private fun actualizarListaVideojuegos() {
         val listViewVideojuegos = findViewById<ListView>(R.id.lv_videojuegos)
-        val adaptador = listViewVideojuegos.adapter as ArrayAdapter<BVideojuegos>?
+        val adaptador = listViewVideojuegos.adapter as ArrayAdapter<BVideojuego>?
         adaptador?.notifyDataSetChanged()
     }
 

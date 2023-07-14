@@ -15,7 +15,7 @@ class ECrudConsola : AppCompatActivity() {
         val botonCrearBDD = findViewById<Button>(R.id.btn_crear_consola)
         botonCrearBDD
             .setOnClickListener {
-                val nombre = findViewById<EditText>(R.id.input_nombre_editar)
+                val nombre = findViewById<EditText>(R.id.input_nombre)
                 val fechaLanzamiento = findViewById<EditText>(R.id.input_lanzamiento)
                 val descontinuado = findViewById<EditText>(R.id.input_descontinuado)
                 val cantidadMandos = findViewById<EditText>(R.id.input_mandos)

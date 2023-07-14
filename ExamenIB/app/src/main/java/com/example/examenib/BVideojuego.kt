@@ -1,6 +1,6 @@
 package com.example.examenib
 
-class BVideojuegos(
+class BVideojuego(
     var id: Int,
     var nombre: String?,
     var fechaLanzamiento: String?,

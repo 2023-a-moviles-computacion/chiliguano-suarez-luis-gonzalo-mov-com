@@ -20,7 +20,7 @@ class EEditarConsola : AppCompatActivity() {
                 val nombre = findViewById<EditText>(R.id.input_nombre_editar)
                 val fechaLanzamiento = findViewById<EditText>(R.id.input_lanzamiento_editar)
                 val descontinuado = findViewById<EditText>(R.id.input_descontinuado_editar)
-                val cantidadMandos = findViewById<EditText>(R.id.input_mandos_editar)
+                val cantidadMandos = findViewById<EditText>(R.id.id_mandos_editar)
                 val precio = findViewById<EditText>(R.id.input_precio_editar)
                 EBaseDeDatos.coBDatos!!.actualizarConsolaFormulario(
                     nombre.text.toString(),
