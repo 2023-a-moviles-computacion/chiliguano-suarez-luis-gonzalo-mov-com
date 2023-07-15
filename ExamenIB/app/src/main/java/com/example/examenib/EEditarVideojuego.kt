@@ -11,6 +11,7 @@ class EEditarVideojuego : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_eeditar_videojuego)
+        EBaseDeDatos.coBDatos = ESqliteHelper(this)
 
         val videojuegoID = intent.getIntExtra("videojuegoID", -1)
 
