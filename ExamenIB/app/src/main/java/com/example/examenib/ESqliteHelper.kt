@@ -227,7 +227,7 @@ class ESqliteHelper(
         nombre: String,
         fechaLanzamiento: String,
         desarrollador: String,
-        multijugadorOnliine: String,
+        multijugadorOnline: String,
         precioLanzamiento: Double,
         id: Int,
     ): Boolean{
@@ -236,7 +236,7 @@ class ESqliteHelper(
         valoresAActualizar.put("nombre", nombre)
         valoresAActualizar.put("fechaLanzamiento", fechaLanzamiento)
         valoresAActualizar.put("desarrollador", desarrollador)
-        valoresAActualizar.put("multijugadorOnline", multijugadorOnliine)
+        valoresAActualizar.put("multijugadorOnline", multijugadorOnline)
         valoresAActualizar.put("precioLanzamiento", precioLanzamiento)
         val parametrosConsultaActualizar = arrayOf(id.toString())
         val resultadosActualizacion = conexionEscritura

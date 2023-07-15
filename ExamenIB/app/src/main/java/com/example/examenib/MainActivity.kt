@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         //Base de datos sqlite
         EBaseDeDatos.coBDatos = ESqliteHelper(this)
+        //val coBDatos = EBaseDeDatos.getInstance(this)
 
         val btnListView = findViewById<Button>(R.id.btn_abrir)
         btnListView.setOnClickListener { irActividad(BListViewConsola::class.java) }

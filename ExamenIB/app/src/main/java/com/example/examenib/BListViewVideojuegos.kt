@@ -20,6 +20,7 @@ class BListViewVideojuegos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blist_view_videojuegos)
+        EBaseDeDatos.coBDatos = ESqliteHelper(this)
 
 
         val consolaID = intent.getIntExtra("consolaID", -1)
