@@ -11,12 +11,12 @@ class BVideojuego(
 ) {
     override fun toString(): String {
         return "ID: ${id}" +
-                "Nombre: ${nombre}" +
-                "Lanzamiento: ${fechaLanzamiento}" +
-                "Desarrolador: ${desarrollador}" +
-                "Multijugador Online: ${multijugadorOnline}" +
-                "Precio de Lanzamiento: ${precioLanzamiento}" +
-                "Consola ID: ${consolaID}"
+                "\nNombre: ${nombre}" +
+                "\nLanzamiento: ${fechaLanzamiento}" +
+                "\nDesarrolador: ${desarrollador}" +
+                "\nMultijugador Online: ${multijugadorOnline}" +
+                "\nPrecio de Lanzamiento: ${precioLanzamiento}" +
+                "\nConsola ID: ${consolaID}"
     }
 
 }

@@ -72,7 +72,7 @@ class BListViewConsola : AppCompatActivity() {
         super.onCreateContextMenu(menu, v, menuInfo)
 
         val inflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
+        inflater.inflate(R.menu.menu_opciones_consolas, menu)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -89,7 +89,7 @@ class BListViewConsola : AppCompatActivity() {
 
                 return true
             }
-            R.id.op_eliminar ->{
+            R.id.op_eliminar_ ->{
              if(eliminarConsola(idSeleccionado)){
                  Toast.makeText(this, "Elemento eliminado", Toast.LENGTH_SHORT).show()
                  consolas.removeAt(posicionSeleccionada)

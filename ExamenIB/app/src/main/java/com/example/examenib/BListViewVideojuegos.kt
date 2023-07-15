@@ -3,7 +3,12 @@ package com.example.examenib
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
 
@@ -26,12 +31,63 @@ class BListViewVideojuegos : AppCompatActivity() {
             arreglo = ArrayAdapter(this, android.R.layout.simple_list_item_1, videojuegos)
             listView.adapter = arreglo
             arreglo.notifyDataSetChanged()
+
+            registerForContextMenu(listView)
         } else{
             Toast.makeText(this, "Error al obtener el ID de la consola", Toast.LENGTH_SHORT).show()
         }
 
 
+
+        val botonIngresarJuego = findViewById<Button>(R.id.btn_ir_agregar_videojuego)
+        botonIngresarJuego.setOnClickListener{
+            irActividad(ECrudVideojuego::class.java, consolaID)
+        }
+
+
     }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_opciones_videojuego, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        val posicionSeleccionada = info.position
+        val videojuegoSeleccionado = videojuegos[posicionSeleccionada]
+        val idVideojuegoSeleccionado = videojuegoSeleccionado.id
+
+        return when (item.itemId) {
+            R.id.op_editar_videojuego -> {
+                val intent = Intent(this, EEditarVideojuego::class.java)
+                intent.putExtra("videojuegoID", idVideojuegoSeleccionado)
+                startActivity(intent)
+                return true
+            }
+
+            R.id.op_eliminar_videojuego -> {
+                if (eliminarVideojuego(idVideojuegoSeleccionado)) {
+                    Toast.makeText(this, "Elemento eliminado", Toast.LENGTH_SHORT).show()
+                    videojuegos.removeAt(posicionSeleccionada)
+                    arreglo.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(this, "Error al eliminar el elemento", Toast.LENGTH_SHORT).show()
+                }
+
+                return true
+            }
+
+            else -> super.onContextItemSelected(item)
+        }
+    }
+
 
     private fun obtenerVideojuegosDeConsola(consolaId: Int): ArrayList<BVideojuego> {
         val dbHelperVideojuegos = ESqliteHelper(this)
@@ -39,7 +95,12 @@ class BListViewVideojuegos : AppCompatActivity() {
         dbHelperVideojuegos.close()
         return videojuegos
     }
-
+    private fun eliminarVideojuego(id: Int): Boolean {
+        val dbHelper = ESqliteHelper(this)
+        val conf = dbHelper.eliminarVideojuegoFormulario(id)
+        dbHelper.close()
+        return conf
+    }
 
 
 
@@ -48,7 +109,7 @@ class BListViewVideojuegos : AppCompatActivity() {
         consolaID: Int
     ){
         val intent = Intent(this, clase)
-        intent.putExtra("CONSOLA_ID", consolaID)
+        intent.putExtra("consolaID", consolaID)
         startActivity(intent)
     }
 }
