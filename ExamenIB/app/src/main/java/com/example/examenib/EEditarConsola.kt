@@ -11,6 +11,7 @@ class EEditarConsola : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_eeditar_consola)
+        EBaseDeDatos.coBDatos = ESqliteHelper(this)
 
         val consolaID = intent.getIntExtra("consolaID", -1)
 

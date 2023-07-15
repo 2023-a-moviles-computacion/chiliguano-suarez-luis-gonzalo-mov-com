@@ -11,6 +11,8 @@ class ECrudVideojuego : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ecrud_videojuego)
+        EBaseDeDatos.coBDatos = ESqliteHelper(this)
+
 
         // Obtener el consolaId de los extras del intent
         val consolaId = intent.getIntExtra("consolaID", -1)
@@ -43,7 +45,9 @@ class ECrudVideojuego : AppCompatActivity() {
     private fun actualizarListaVideojuegos() {
         val listViewVideojuegos = findViewById<ListView>(R.id.lv_videojuegos)
         val adaptador = listViewVideojuegos.adapter as ArrayAdapter<BVideojuego>?
-        adaptador?.notifyDataSetChanged()
+        if (adaptador != null) {
+            adaptador.notifyDataSetChanged()
+        }
     }
 
 }

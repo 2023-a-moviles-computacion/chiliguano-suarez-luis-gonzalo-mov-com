@@ -16,6 +16,7 @@ class BListViewVideojuegos : AppCompatActivity() {
 
     private lateinit var  arreglo: ArrayAdapter<BVideojuego>
     private lateinit var  videojuegos: ArrayList<BVideojuego>
+    var idConsolaAux = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,8 @@ class BListViewVideojuegos : AppCompatActivity() {
             arreglo.notifyDataSetChanged()
 
             registerForContextMenu(listView)
+
+            idConsolaAux = consolaID
         } else{
             Toast.makeText(this, "Error al obtener el ID de la consola", Toast.LENGTH_SHORT).show()
         }
@@ -46,6 +49,22 @@ class BListViewVideojuegos : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Obtén las consolas actualizadas desde la base de datos
+        val videojuegosActualziados = obtenerVideojuegosDeConsola(idConsolaAux)
+
+        // Borra los elementos del adaptador actual
+        arreglo.clear()
+
+        // Agrega las consolas actualizadas al adaptador
+        arreglo.addAll(videojuegosActualziados)
+
+        // Notifica al adaptador que los datos han cambiado
+        arreglo.notifyDataSetChanged()
     }
 
     override fun onCreateContextMenu(

@@ -11,6 +11,7 @@ class ECrudConsola : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ecrud_consola)
+        EBaseDeDatos.coBDatos = ESqliteHelper(this)
 
         val botonCrearBDD = findViewById<Button>(R.id.btn_crear_consola)
         botonCrearBDD
@@ -39,6 +40,8 @@ class ECrudConsola : AppCompatActivity() {
     private fun actualizarListaConsolas() {
         val listViewConsolas = findViewById<ListView>(R.id.lv_consolas)
         val adaptador = listViewConsolas.adapter as ArrayAdapter<BConsola>?
-        adaptador?.notifyDataSetChanged()
+        if (adaptador != null) {
+            adaptador.notifyDataSetChanged()
+        }
     }
 }
