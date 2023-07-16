@@ -20,7 +20,7 @@ class BListViewConsola : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blist_view_consola)
-        EBaseDeDatos.coBDatos = ESqliteHelper(this)
+        EBaseDeDatos.BDatos = ESqliteHelper(this)
 
         //Obtener las consolas desde la base de datos
         consolas = obtenerConsolasDesdeLaBaseDeDatos()

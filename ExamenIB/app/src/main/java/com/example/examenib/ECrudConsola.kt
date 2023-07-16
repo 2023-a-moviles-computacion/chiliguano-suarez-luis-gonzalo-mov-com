@@ -11,7 +11,7 @@ class ECrudConsola : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ecrud_consola)
-        EBaseDeDatos.coBDatos = ESqliteHelper(this)
+        EBaseDeDatos.BDatos = ESqliteHelper(this)
 
         val botonCrearBDD = findViewById<Button>(R.id.btn_crear_consola)
         botonCrearBDD
@@ -21,7 +21,7 @@ class ECrudConsola : AppCompatActivity() {
                 val descontinuado = findViewById<EditText>(R.id.input_descontinuado)
                 val cantidadMandos = findViewById<EditText>(R.id.input_mandos)
                 val precio = findViewById<EditText>(R.id.input_precio)
-                EBaseDeDatos.coBDatos!!.crearConsola(
+                EBaseDeDatos.BDatos!!.crearConsola(
                     nombre.text.toString(),
                     fechaLanzamiento.text.toString(),
                     descontinuado.text.toString(),

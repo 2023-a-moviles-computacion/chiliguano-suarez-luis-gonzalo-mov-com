@@ -11,7 +11,7 @@ class EEditarConsola : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_eeditar_consola)
-        EBaseDeDatos.coBDatos = ESqliteHelper(this)
+        EBaseDeDatos.BDatos = ESqliteHelper(this)
 
         val consolaID = intent.getIntExtra("consolaID", -1)
 
@@ -23,7 +23,7 @@ class EEditarConsola : AppCompatActivity() {
                 val descontinuado = findViewById<EditText>(R.id.input_descontinuado_editar)
                 val cantidadMandos = findViewById<EditText>(R.id.id_mandos_editar)
                 val precio = findViewById<EditText>(R.id.input_precio_editar)
-                EBaseDeDatos.coBDatos!!.actualizarConsolaFormulario(
+                EBaseDeDatos.BDatos!!.actualizarConsolaFormulario(
                     nombre.text.toString(),
                     fechaLanzamiento.text.toString(),
                     descontinuado.text.toString(),

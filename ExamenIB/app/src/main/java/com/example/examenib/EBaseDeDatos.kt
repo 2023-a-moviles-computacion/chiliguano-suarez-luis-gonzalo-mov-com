@@ -5,12 +5,12 @@ import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instanc
 
 class EBaseDeDatos {
     companion object{
-        var coBDatos: ESqliteHelper?=null
+        var BDatos: ESqliteHelper?=null
         fun getInstance(context: Context): ESqliteHelper {
             if (instance == null) {
-                coBDatos = ESqliteHelper(context.applicationContext)
+                BDatos = ESqliteHelper(context.applicationContext)
             }
-            return coBDatos!!
+            return BDatos!!
         }
 
 

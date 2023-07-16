@@ -11,7 +11,7 @@ class EEditarVideojuego : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_eeditar_videojuego)
-        EBaseDeDatos.coBDatos = ESqliteHelper(this)
+        EBaseDeDatos.BDatos = ESqliteHelper(this)
 
         val videojuegoID = intent.getIntExtra("videojuegoID", -1)
 
@@ -23,7 +23,7 @@ class EEditarVideojuego : AppCompatActivity() {
                 val desarrollador = findViewById<EditText>(R.id.input_desarrollador_videojuego_editar)
                 val multijugadorOnline = findViewById<EditText>(R.id.input_online_videojuego_editar)
                 val precio = findViewById<EditText>(R.id.input_precio_videojuego_editar)
-                EBaseDeDatos.coBDatos!!.actualizarVideojuegoFormulario(
+                EBaseDeDatos.BDatos!!.actualizarVideojuegoFormulario(
                     nombre.text.toString(),
                     fechaLanzamiento.text.toString(),
                     desarrollador.text.toString(),
@@ -38,8 +38,10 @@ class EEditarVideojuego : AppCompatActivity() {
     }
 
     private fun actualizarListaVideojuegos() {
-        val listViewVideojuegos= findViewById<ListView>(R.id.lv_videojuegos)
+        val listViewVideojuegos = findViewById<ListView>(R.id.lv_videojuegos)
         val adaptador = listViewVideojuegos.adapter as ArrayAdapter<BVideojuego>?
-        adaptador?.notifyDataSetChanged()
+        if (adaptador != null) {
+            adaptador.notifyDataSetChanged()
+        }
     }
 }

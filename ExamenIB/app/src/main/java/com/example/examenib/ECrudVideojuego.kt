@@ -11,7 +11,7 @@ class ECrudVideojuego : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ecrud_videojuego)
-        EBaseDeDatos.coBDatos = ESqliteHelper(this)
+        EBaseDeDatos.BDatos = ESqliteHelper(this)
 
 
         // Obtener el consolaId de los extras del intent
@@ -25,7 +25,7 @@ class ECrudVideojuego : AppCompatActivity() {
                 val desarrollador = findViewById<EditText>(R.id.input_desarrollador_videojuego)
                 val multijugadorOnline = findViewById<EditText>(R.id.input_online_videojuego)
                 val precio = findViewById<EditText>(R.id.input_precio_videojuego)
-                EBaseDeDatos.coBDatos!!.crearVideojuego(
+                EBaseDeDatos.BDatos!!.crearVideojuego(
                     nombre.text.toString(),
                     fechaLanzamiento.text.toString(),
                     desarrollador.text.toString(),
