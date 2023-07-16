@@ -40,9 +40,12 @@ class EEditarConsola : AppCompatActivity() {
     private fun actualizarListaConsolas() {
 
         val listViewConsolas = findViewById<ListView>(R.id.lv_consolas)
-        val adaptador = listViewConsolas.adapter as ArrayAdapter<BConsola>?
-        if (adaptador != null) {
-            adaptador.notifyDataSetChanged()
+
+        if (listViewConsolas != null) {
+            val adaptador = listViewConsolas.adapter as ArrayAdapter<BConsola>?
+            if (adaptador != null) {
+                adaptador.notifyDataSetChanged()
+            }
         } else{
             finish()
         }
