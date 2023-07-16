@@ -39,15 +39,18 @@ class ECrudVideojuego : AppCompatActivity() {
             }
 
 
-
     }
 
     private fun actualizarListaVideojuegos() {
         val listViewVideojuegos = findViewById<ListView>(R.id.lv_videojuegos)
         val adaptador = listViewVideojuegos.adapter as ArrayAdapter<BVideojuego>?
-        if (adaptador != null) {
+        if (adaptador != null && listViewVideojuegos != null) {
             adaptador.notifyDataSetChanged()
-        }
-    }
 
+        } else {
+            finish()
+        }
+
+
+    }
 }
