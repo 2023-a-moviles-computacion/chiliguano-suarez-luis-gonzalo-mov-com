@@ -41,7 +41,7 @@ class EEditarVideojuego : AppCompatActivity() {
 
         val listViewVideojuegos = findViewById<ListView>(R.id.lv_videojuegos)
         val adaptador = listViewVideojuegos.adapter as ArrayAdapter<BVideojuego>?
-        if (adaptador != null && listViewVideojuegos !=null) {
+        if (adaptador != null) {
             adaptador.notifyDataSetChanged()
         } else{
             finish()

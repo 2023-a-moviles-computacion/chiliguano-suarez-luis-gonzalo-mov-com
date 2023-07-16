@@ -41,7 +41,7 @@ class EEditarConsola : AppCompatActivity() {
 
         val listViewConsolas = findViewById<ListView>(R.id.lv_consolas)
         val adaptador = listViewConsolas.adapter as ArrayAdapter<BConsola>?
-        if (adaptador != null && listViewConsolas != null) {
+        if (adaptador != null) {
             adaptador.notifyDataSetChanged()
         } else{
             finish()
