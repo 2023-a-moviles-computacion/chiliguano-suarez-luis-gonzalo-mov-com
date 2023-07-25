@@ -30,7 +30,7 @@
         android:id="@+id/tv_likes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
+        android:layout_marginStart="116dp"
         android:text="Likes"
         app:layout_constraintBottom_toBottomOf="@+id/tv_descripcion"
         app:layout_constraintStart_toEndOf="@+id/tv_descripcion"

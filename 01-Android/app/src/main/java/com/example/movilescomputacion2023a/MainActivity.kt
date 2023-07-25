@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.movilescomputacion2023a.R.id.btn_ir_intent_implicito
 
 class MainActivity : AppCompatActivity() {
 
@@ -95,6 +94,12 @@ class MainActivity : AppCompatActivity() {
         botonRView
             .setOnClickListener {
                 irActividad(FRecyclerView::class.java)
+            }
+
+        val botonGoogleMaps = findViewById<Button>(R.id.btn_google_map)
+        botonGoogleMaps
+            .setOnClickListener {
+                irActividad(GGoogleMapsActivity::class.java)
             }
     }
 
