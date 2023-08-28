@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 
+@Suppress("DEPRECATION")
 class CIntentExplicitoParametros : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -12,6 +13,9 @@ class CIntentExplicitoParametros : AppCompatActivity() {
         val nombre = intent.getStringExtra("nombre")
         val apellido = intent.getStringArrayExtra("apellido")
         val edad = intent.getIntExtra("edad", 0)
+        val entrenador = intent.getParcelableExtra<BEntrenador>(
+            "entrenador"
+        )
 
         //para boton intent
         val boton=findViewById<Button>(R.id.btn_devolver_respuesta)

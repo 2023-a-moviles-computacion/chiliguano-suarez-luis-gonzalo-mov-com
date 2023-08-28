@@ -13,8 +13,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ef4bd0dd-bde6-4056-8cdf-7fe5eb823501" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/ICities.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/ICities.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/BEntrenador.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/BEntrenador.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/CIntentExplicitoParametros.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/CIntentExplicitoParametros.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/IFirestore.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/IFirestore.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/movilescomputacion2023a/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Deber03/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Deber03/.idea/gradle.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
