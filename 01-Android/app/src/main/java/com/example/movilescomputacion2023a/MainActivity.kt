@@ -11,6 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : AppCompatActivity() {
 
+
+
     val callbackContenidoIntentExplicito =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -125,6 +127,9 @@ class MainActivity : AppCompatActivity() {
         intentExplicito.putExtra("nombre", "Luis")
         intentExplicito.putExtra("apellido", "Chiliguano")
         intentExplicito.putExtra("edad", 23)
+        intentExplicito.putExtra("entrenador",
+        BEntrenador(1, "GONZALO", "Desc")
+        )
 
         callbackContenidoIntentExplicito.launch(intentExplicito)
 
