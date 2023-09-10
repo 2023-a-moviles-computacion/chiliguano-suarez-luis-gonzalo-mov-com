@@ -67,7 +67,7 @@
                 android:layout_height="15dp"
                 android:layout_marginStart="320dp"
                 android:layout_marginTop="20dp"
-                app:srcCompat="@drawable/check"
+                app:srcCompat="@drawable/check_icon"
                 app:tint="#00aae4"
                 android:orientation="vertical" />
         </RelativeLayout>

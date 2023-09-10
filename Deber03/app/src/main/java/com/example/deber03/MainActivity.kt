@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
 
         inicializarRecyclerView()
 
-        //Referencias al botón de historias del menú de navegación
         val ver_historias = findViewById<ImageView>(R.id.ver_historias)
         ver_historias.setOnClickListener{
             val intent = Intent(this, Historias::class.java)

@@ -44,7 +44,7 @@
                         android:layout_height="35dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"
-                        app:srcCompat="@drawable/menu"
+                        app:srcCompat="@drawable/menu_icon"
                         app:tint="#FFFFFF" />
                 </LinearLayout>
 
@@ -75,7 +75,7 @@
                         android:layout_height="28dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/camera"
+                        app:srcCompat="@drawable/camera_icon"
                         app:tint="#FFFFFF" />
                 </LinearLayout>
 
@@ -92,7 +92,7 @@
                         android:layout_height="25dp"
                         android:layout_marginLeft="12dp"
                         android:layout_marginTop="12dp"
-                        app:srcCompat="@drawable/lapiz"
+                        app:srcCompat="@drawable/lapiz_icon"
                         app:tint="#FFFFFF" />
                 </LinearLayout>
             </LinearLayout>
@@ -111,7 +111,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
-                    app:srcCompat="@drawable/lupa"
+                    app:srcCompat="@drawable/lupa_icon"
                     app:tint="#606060" />
 
                 <TextView
@@ -176,7 +176,7 @@
                             android:layout_width="50dp"
                             android:layout_height="35dp"
                             android:layout_marginTop="8dp"
-                            app:srcCompat="@drawable/chats"
+                            app:srcCompat="@drawable/chats_icon"
                             app:tint="#00aae4"
                             android:title="Chats"/>
 
@@ -204,7 +204,7 @@
                             android:layout_marginLeft="2dp"
                             app:tint="#ffffff"
                             android:title="Llamadas"
-                            app:srcCompat="@drawable/llamadas" />
+                            app:srcCompat="@drawable/llamadas_icon" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -228,7 +228,7 @@
                             app:tint="#ffffff"
                             android:layout_weight="1"
                             android:title="Personas"
-                            app:srcCompat="@drawable/personas" />
+                            app:srcCompat="@drawable/personas_icon" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
                             app:tint="#ffffff"
                             android:layout_weight="1"
                             android:title="Historias"
-                            app:srcCompat="@drawable/historias" />
+                            app:srcCompat="@drawable/historias_icon" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
