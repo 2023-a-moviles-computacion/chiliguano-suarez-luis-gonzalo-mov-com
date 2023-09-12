@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.ListView
 
 class EEditarConsola : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {/*
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_eeditar_consola)
         EBaseDeDatos.BDatos = ESqliteHelper(this)
@@ -48,6 +48,6 @@ class EEditarConsola : AppCompatActivity() {
             }
         } else{
             finish()
-        }
+        }*/
     }
 }

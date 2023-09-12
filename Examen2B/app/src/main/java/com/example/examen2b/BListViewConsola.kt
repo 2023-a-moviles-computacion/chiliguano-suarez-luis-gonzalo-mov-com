@@ -7,10 +7,22 @@ import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class BListViewConsola : AppCompatActivity() {
-    private lateinit var  arreglo: ArrayAdapter<BConsola>
-    private lateinit var  consolas: ArrayList<BConsola>
+
+
+    var query: Query? = null
+    //private lateinit var db: FirebaseFirestore
+
+    var  arreglo: ArrayList<BConsola> = arrayListOf()
+
+    private lateinit var  adaptador: ArrayAdapter<BConsola>
+
+
 
 
 
@@ -20,23 +32,21 @@ class BListViewConsola : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blist_view_consola)
-        EBaseDeDatos.BDatos = ESqliteHelper(this)
-
-        //Obtener las consolas desde la base de datos
-        consolas = obtenerConsolasDesdeLaBaseDeDatos()
 
 
 
         val listView = findViewById<ListView>(R.id.lv_consolas)
-        arreglo = ArrayAdapter(
+        adaptador = ArrayAdapter(
             this, //contexto
             android.R.layout.simple_list_item_1,
-            consolas
+            arreglo
         )
 
+        obtenerConsolasDesdeFirestore(adaptador)
 
-        listView.adapter = arreglo
-        arreglo.notifyDataSetChanged()
+
+        listView.adapter = adaptador
+        adaptador.notifyDataSetChanged()
 
         registerForContextMenu(listView)
 
@@ -53,16 +63,18 @@ class BListViewConsola : AppCompatActivity() {
         super.onResume()
 
         // Obtén las consolas actualizadas desde la base de datos
-        val consolasActualizadas = obtenerConsolasDesdeLaBaseDeDatos()
+
+
 
         // Borra los elementos del adaptador actual
-        arreglo.clear()
+        adaptador.clear()
+        obtenerConsolasDesdeFirestore(adaptador)
 
         // Agrega las consolas actualizadas al adaptador
-        arreglo.addAll(consolasActualizadas)
+        //arreglo.addAll(consolasActualizadas)
 
         // Notifica al adaptador que los datos han cambiado
-        arreglo.notifyDataSetChanged()
+        //adaptador.notifyDataSetChanged()
     }
 
     override fun onCreateContextMenu(
@@ -79,8 +91,8 @@ class BListViewConsola : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         val posicionSeleccionada = info.position
-        val consolaSeleccionada = consolas[posicionSeleccionada]
-        val idSeleccionado = consolaSeleccionada.id
+        val consolaSeleccionada = arreglo[posicionSeleccionada]
+        val idSeleccionado = consolaSeleccionada.nombre
 
         return when (item.itemId){
             R.id.op_editar ->{
@@ -90,7 +102,7 @@ class BListViewConsola : AppCompatActivity() {
 
                 return true
             }
-            R.id.op_eliminar_ ->{
+            /*R.id.op_eliminar_ ->{
                 if(eliminarConsola(idSeleccionado)){
                     Toast.makeText(this, "Elemento eliminado", Toast.LENGTH_SHORT).show()
                     consolas.removeAt(posicionSeleccionada)
@@ -101,7 +113,7 @@ class BListViewConsola : AppCompatActivity() {
                 }
 
                 return true
-            }
+            }*/
             R.id.op_ver_juegos ->{
                 val intent = Intent(this, BListViewVideojuegos::class.java)
                 intent.putExtra("consolaID", idSeleccionado)
@@ -114,19 +126,69 @@ class BListViewConsola : AppCompatActivity() {
 
     }
 
-    private fun obtenerConsolasDesdeLaBaseDeDatos(): ArrayList<BConsola> {
-        val dbHelper = ESqliteHelper(this)
-        val consolas = dbHelper.obtenerTodasLasConsolas()
-        dbHelper.close()
-        return consolas
+    private fun obtenerConsolasDesdeFirestore(
+        adaptador: ArrayAdapter<BConsola>
+    ){
+        val db = Firebase.firestore
+        val consolasRefUnico = db.collection("consolas")
+
+        consolasRefUnico
+            .orderBy("nombre", Query.Direction.ASCENDING)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val nuevosElementos = ArrayList<BConsola>() // Arreglo temporal
+
+                for (consola in querySnapshot) {
+                    val nuevaConsola = BConsola(
+                        consola.data?.get("nombre") as String,
+                        consola.data?.get("fechaLanzamiento") as String?,
+                        consola.data?.get("descontinuado") as String?,
+                        consola.data?.get("cantidadMandos") as Long?,
+                        consola.data?.get("precioLanzamiento") as Double?,
+                        consola.data?.get("listaVideojuegos") as ArrayList<BVideojuego>?,
+                    )
+                    nuevosElementos.add(nuevaConsola)
+                }
+
+                // Borra los elementos existentes en el adaptador y en el arreglo
+                adaptador.clear()
+                arreglo.clear()
+
+                // Agrega los nuevos elementos al arreglo y al adaptador
+                arreglo.addAll(nuevosElementos)
+                adaptador.notifyDataSetChanged()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error al obtener las consolas desde Firestore: $exception", Toast.LENGTH_SHORT).show()
+            }
+
     }
 
-    private fun eliminarConsola(id: Int): Boolean {
+   /* private fun eliminarConsola(id: Int): Boolean {
         val dbHelper = ESqliteHelper(this)
         val conf = dbHelper.eliminarConsolaFormulario(id)
         dbHelper.close()
         return conf
+    }*/
+
+
+
+    fun limpiarArreglo(){ arreglo.clear() }
+
+    fun anadirArregloConsola(consola: QueryDocumentSnapshot)
+    {
+        //ciudad.id
+        val nuevaConsola = BConsola(
+            consola.data?.get("nombre") as String,
+            consola.data?.get("fechaLanzamiento") as String?,
+            consola.data?.get("descontinuado") as String?,
+            consola.data?.get("cantidadMandos") as Long?,
+            consola.data?.get("precioLanzamiento") as Double?,
+            consola.data?.get("listaVideojuegos") as ArrayList<BVideojuego>?,
+        )
+        arreglo.add(nuevaConsola)
     }
+
 
 
 

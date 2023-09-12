@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Base de datos sqlite
-        EBaseDeDatos.BDatos = ESqliteHelper(this)
+        //EBaseDeDatos.BDatos = ESqliteHelper(this)
         //val coBDatos = EBaseDeDatos.getInstance(this)
 
         val btnListView = findViewById<Button>(R.id.btn_abrir)

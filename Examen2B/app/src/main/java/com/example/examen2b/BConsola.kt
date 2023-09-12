@@ -1,17 +1,16 @@
 package com.example.examen2b
 
 class BConsola (
-    var id: Int,
-    var nombre:String?,
+    var nombre:String,
     var fechaLanzamiento:String?,
     var descontinuado: String?,
-    var cantidadMandos: Int?,
+    var cantidadMandos: Long?,
     var precioLanzamiento: Double?,
+    var listaVideojuegos: List<BVideojuego>?
     ) {
 
         override fun toString(): String {
-            return "ID: ${id}" +
-                    "\nNombre: ${nombre}" +
+            return  "\nNombre: ${nombre}" +
                     "\nLanzamiento: ${fechaLanzamiento}" +
                     "\nDescontinuado: ${descontinuado}" +
                     "\nCantidad de Mandos: ${cantidadMandos}" +

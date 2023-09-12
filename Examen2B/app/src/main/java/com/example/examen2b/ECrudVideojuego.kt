@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.ListView
 
 class ECrudVideojuego : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {/*
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ecrud_videojuego)
         EBaseDeDatos.BDatos = ESqliteHelper(this)
@@ -52,7 +52,7 @@ class ECrudVideojuego : AppCompatActivity() {
 
         } else {
             finish()
-        }
+        }*/
 
 
     }

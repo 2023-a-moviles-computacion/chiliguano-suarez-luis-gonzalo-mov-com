@@ -1,7 +1,7 @@
 package com.example.examen2b
 
 class BVideojuego(
-    var id: Int,
+    var id: String?,
     var nombre: String?,
     var fechaLanzamiento: String?,
     var desarrollador: String?,

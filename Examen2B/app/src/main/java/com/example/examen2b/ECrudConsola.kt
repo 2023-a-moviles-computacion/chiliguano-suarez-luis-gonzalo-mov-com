@@ -6,34 +6,61 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class ECrudConsola : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ecrud_consola)
-        EBaseDeDatos.BDatos = ESqliteHelper(this)
 
-        val botonCrearBDD = findViewById<Button>(R.id.btn_crear_consola)
-        botonCrearBDD
+        val botonCrearConsola = findViewById<Button>(R.id.btn_crear_consola)
+        botonCrearConsola
             .setOnClickListener {
+
                 val nombre = findViewById<EditText>(R.id.input_nombre)
                 val fechaLanzamiento = findViewById<EditText>(R.id.input_lanzamiento)
                 val descontinuado = findViewById<EditText>(R.id.input_descontinuado)
                 val cantidadMandos = findViewById<EditText>(R.id.input_mandos)
                 val precio = findViewById<EditText>(R.id.input_precio)
-                EBaseDeDatos.BDatos!!.crearConsola(
+
+                val tuListaDeVideojuegos = mutableListOf<BVideojuego>()
+
+
+
+                val nuevaConsola = BConsola(
                     nombre.text.toString(),
                     fechaLanzamiento.text.toString(),
                     descontinuado.text.toString(),
-                    cantidadMandos.text.toString().toInt(),
-                    precio.text.toString().toDouble()
+                    cantidadMandos.text.toString().toLong(),
+                    precio.text.toString().toDouble(),
+                    tuListaDeVideojuegos
                 )
 
-                // Notificar al adaptador que los datos han cambiado
+                agregarConsolaAFirestore(nuevaConsola)
                 actualizarListaConsolas()
+
             }
 
 
+
+    }
+
+    private fun agregarConsolaAFirestore(consola: BConsola) {
+        // Crea un documento sin un ID específico (Firestore generará un ID automático)
+        val db = Firebase.firestore
+        val consolas = db.collection("consolas")
+
+        val data = hashMapOf(
+            "nombre" to consola.nombre,
+            "fechaLanzamiento" to consola.fechaLanzamiento,
+            "descontinuado" to consola.descontinuado,
+            "cantidadMandos" to consola.cantidadMandos,
+            "precioLanzamiento" to consola.precioLanzamiento,
+            "videojuegosDeConsola" to consola.listaVideojuegos
+        )
+        consolas.document(consola.nombre).set(data)
 
     }
 

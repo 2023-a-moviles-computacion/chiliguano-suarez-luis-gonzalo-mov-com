@@ -13,7 +13,7 @@ import android.widget.ListView
 import android.widget.Toast
 
 class BListViewVideojuegos : AppCompatActivity() {
-
+/*
     private lateinit var  arreglo: ArrayAdapter<BVideojuego>
     private lateinit var  videojuegos: ArrayList<BVideojuego>
     var idConsolaAux = 0
@@ -21,7 +21,7 @@ class BListViewVideojuegos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blist_view_videojuegos)
-        EBaseDeDatos.BDatos = ESqliteHelper(this)
+        //EBaseDeDatos.BDatos = ESqliteHelper(this)
 
 
         val consolaID = intent.getIntExtra("consolaID", -1)
@@ -92,7 +92,7 @@ class BListViewVideojuegos : AppCompatActivity() {
                 return true
             }
 
-            R.id.op_eliminar_videojuego -> {
+            /*R.id.op_eliminar_videojuego -> {
                 if (eliminarVideojuego(idVideojuegoSeleccionado)) {
                     Toast.makeText(this, "Elemento eliminado", Toast.LENGTH_SHORT).show()
                     videojuegos.removeAt(posicionSeleccionada)
@@ -102,15 +102,15 @@ class BListViewVideojuegos : AppCompatActivity() {
                 }
 
                 return true
-            }
+            }*/
 
             else -> super.onContextItemSelected(item)
         }
     }
 
 
-    private fun obtenerVideojuegosDeConsola(consolaId: Int): ArrayList<BVideojuego> {
-        val dbHelperVideojuegos = ESqliteHelper(this)
+    /*private fun obtenerVideojuegosDeConsola(consolaId: Int): ArrayList<BVideojuego> {
+        //val dbHelperVideojuegos = ESqliteHelper(this)
         val videojuegos = dbHelperVideojuegos.obtenerVideojuegosDeConsola(consolaId)
         dbHelperVideojuegos.close()
         return videojuegos
@@ -120,7 +120,7 @@ class BListViewVideojuegos : AppCompatActivity() {
         val conf = dbHelper.eliminarVideojuegoFormulario(id)
         dbHelper.close()
         return conf
-    }
+    }*/
 
 
 
@@ -131,5 +131,5 @@ class BListViewVideojuegos : AppCompatActivity() {
         val intent = Intent(this, clase)
         intent.putExtra("consolaID", consolaID)
         startActivity(intent)
-    }
+    }*/
 }

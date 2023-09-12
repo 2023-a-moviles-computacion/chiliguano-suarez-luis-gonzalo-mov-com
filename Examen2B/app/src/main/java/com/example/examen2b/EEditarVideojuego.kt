@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.ListView
 
 class EEditarVideojuego : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {/*
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_eeditar_videojuego)
         EBaseDeDatos.BDatos = ESqliteHelper(this)
@@ -48,6 +48,6 @@ class EEditarVideojuego : AppCompatActivity() {
             }
         } else{
             finish()
-        }
+        }*/
     }
 }
