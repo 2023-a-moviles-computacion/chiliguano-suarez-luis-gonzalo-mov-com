@@ -12,11 +12,11 @@ class Chat (
         init {
             arregloChats
                 .add(
-                    Chat("Isaí", "No lo creo  ", "-  30 ago", "chat1")
+                    Chat("Isaí", "No lo creo  ", "-  1:13 a.m.", "chat1")
                 )
             arregloChats
                 .add(
-                    Chat("Anthony Chamba", "Es verdad, lo soy :(  ", "-  29 ago", "chat2")
+                    Chat("Anthony Chamba", "Es verdad, lo soy :(  ", "-  sáb", "chat2")
                 )
             arregloChats
                 .add(
