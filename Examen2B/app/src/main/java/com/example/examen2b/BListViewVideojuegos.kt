@@ -11,12 +11,20 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class BListViewVideojuegos : AppCompatActivity() {
-/*
-    private lateinit var  arreglo: ArrayAdapter<BVideojuego>
-    private lateinit var  videojuegos: ArrayList<BVideojuego>
-    var idConsolaAux = 0
+
+    var query: Query? = null
+    //private lateinit var db: FirebaseFirestore
+
+    var  arreglo: ArrayList<BVideojuego> = arrayListOf()
+
+    private lateinit var  adaptador: ArrayAdapter<BVideojuego>
+
+    var idConsolaAux = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,28 +32,36 @@ class BListViewVideojuegos : AppCompatActivity() {
         //EBaseDeDatos.BDatos = ESqliteHelper(this)
 
 
-        val consolaID = intent.getIntExtra("consolaID", -1)
+        var consolaID = intent.getStringExtra("consolaID")
 
-        if(consolaID != -1){
-            videojuegos = obtenerVideojuegosDeConsola(consolaID)
+        if(consolaID != null){
 
             val listView = findViewById<ListView>(R.id.lv_videojuegos)
-            arreglo = ArrayAdapter(this, android.R.layout.simple_list_item_1, videojuegos)
-            listView.adapter = arreglo
-            arreglo.notifyDataSetChanged()
+            adaptador = ArrayAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                arreglo
+            )
 
+            listView.adapter = adaptador
             registerForContextMenu(listView)
 
-            idConsolaAux = consolaID
+            obtenerVideojuegosDeConsola(consolaID!!, adaptador)
+            adaptador.notifyDataSetChanged()
+
+
         } else{
             Toast.makeText(this, "Error al obtener el ID de la consola", Toast.LENGTH_SHORT).show()
         }
 
+        if (consolaID != null) {
+            idConsolaAux = consolaID
+        }
 
 
         val botonIngresarJuego = findViewById<Button>(R.id.btn_ir_agregar_videojuego)
         botonIngresarJuego.setOnClickListener{
-            irActividad(ECrudVideojuego::class.java, consolaID)
+            irActividad(ECrudVideojuego::class.java, consolaID!!)
         }
 
 
@@ -53,18 +69,8 @@ class BListViewVideojuegos : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        // Obtén las consolas actualizadas desde la base de datos
-        val videojuegosActualziados = obtenerVideojuegosDeConsola(idConsolaAux)
-
-        // Borra los elementos del adaptador actual
-        arreglo.clear()
-
-        // Agrega las consolas actualizadas al adaptador
-        arreglo.addAll(videojuegosActualziados)
-
-        // Notifica al adaptador que los datos han cambiado
-        arreglo.notifyDataSetChanged()
+        adaptador.clear()
+        obtenerVideojuegosDeConsola(idConsolaAux, adaptador)
     }
 
     override fun onCreateContextMenu(
@@ -81,8 +87,8 @@ class BListViewVideojuegos : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         val posicionSeleccionada = info.position
-        val videojuegoSeleccionado = videojuegos[posicionSeleccionada]
-        val idVideojuegoSeleccionado = videojuegoSeleccionado.id
+        val videojuegoSeleccionado = arreglo[posicionSeleccionada]
+        val idVideojuegoSeleccionado = videojuegoSeleccionado.nombre
 
         return when (item.itemId) {
             R.id.op_editar_videojuego -> {
@@ -109,27 +115,62 @@ class BListViewVideojuegos : AppCompatActivity() {
     }
 
 
-    /*private fun obtenerVideojuegosDeConsola(consolaId: Int): ArrayList<BVideojuego> {
+    private fun obtenerVideojuegosDeConsola(
+        consolaId: String,
+        adaptador: ArrayAdapter<BVideojuego>
+    ) {
         //val dbHelperVideojuegos = ESqliteHelper(this)
-        val videojuegos = dbHelperVideojuegos.obtenerVideojuegosDeConsola(consolaId)
-        dbHelperVideojuegos.close()
-        return videojuegos
+        val db = Firebase.firestore
+        val videojuegosRef =
+            db.collection("consolas").document(consolaId).collection("videojuegosDeConsola")
+
+        videojuegosRef
+            .orderBy("nombre", Query.Direction.ASCENDING)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val nuevosElementos = ArrayList<BVideojuego>() //Arreglo temporal
+
+                for (videojuego in querySnapshot) {
+                    val nuevoVideojuego = BVideojuego(
+                        videojuego.data.get("nombre") as String,
+                        videojuego.data?.get("fechaLanzamiento") as String?,
+                        videojuego.data?.get("desarrollador") as String?,
+                        videojuego.data?.get("multijugadorOnline") as String?,
+                        videojuego.data?.get("precioLanzamiento") as Double?
+                    )
+                    nuevosElementos.add(nuevoVideojuego)
+                }
+
+                adaptador.clear()
+                arreglo = nuevosElementos
+
+                // Agrega los nuevos elementos al arreglo y al adaptador
+                adaptador.addAll(nuevosElementos)
+                adaptador.notifyDataSetChanged()
+
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(
+                    this,
+                    "Error al obtener las consolas desde Firestore: $exception",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
-    private fun eliminarVideojuego(id: Int): Boolean {
-        val dbHelper = ESqliteHelper(this)
-        val conf = dbHelper.eliminarVideojuegoFormulario(id)
-        dbHelper.close()
-        return conf
+   /* private fun eliminarVideojuego(id: Int): Boolean {
+
+
+        return
     }*/
 
 
 
     fun irActividad(
         clase: Class<*>,
-        consolaID: Int
+        consolaID: String
     ){
         val intent = Intent(this, clase)
         intent.putExtra("consolaID", consolaID)
         startActivity(intent)
-    }*/
+    }
 }

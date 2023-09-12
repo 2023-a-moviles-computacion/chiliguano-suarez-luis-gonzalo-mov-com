@@ -126,11 +126,13 @@ class BListViewConsola : AppCompatActivity() {
 
     }
 
-    private fun obtenerConsolasDesdeFirestore(
+    /*private fun obtenerConsolasDesdeFirestore(
         adaptador: ArrayAdapter<BConsola>
     ){
         val db = Firebase.firestore
         val consolasRefUnico = db.collection("consolas")
+        limpiarArreglo()
+        adaptador.notifyDataSetChanged()
 
         consolasRefUnico
             .orderBy("nombre", Query.Direction.ASCENDING)
@@ -151,13 +153,41 @@ class BListViewConsola : AppCompatActivity() {
                 }
 
                 // Borra los elementos existentes en el adaptador y en el arreglo
-                adaptador.clear()
-                arreglo.clear()
+                //adaptador.clear()
+                //arreglo.clear()
 
                 // Agrega los nuevos elementos al arreglo y al adaptador
                 arreglo.addAll(nuevosElementos)
                 adaptador.notifyDataSetChanged()
             }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error al obtener las consolas desde Firestore: $exception", Toast.LENGTH_SHORT).show()
+            }
+
+    }*/
+
+    private fun obtenerConsolasDesdeFirestore(
+        adaptador: ArrayAdapter<BConsola>
+    ){
+        val db = Firebase.firestore
+        val consolasRefUnico = db.collection("consolas")
+        limpiarArreglo()
+        // Borra los elementos existentes en el adaptador y en el arreglo
+        adaptador.clear()
+        adaptador.notifyDataSetChanged()
+
+        consolasRefUnico
+            .orderBy("nombre", Query.Direction.ASCENDING)
+            .get()
+            .addOnSuccessListener {
+                limpiarArreglo()
+                for (consola in it) {
+                    anadirArregloConsola(consola)
+                }
+
+                    adaptador.notifyDataSetChanged()
+            }
+
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Error al obtener las consolas desde Firestore: $exception", Toast.LENGTH_SHORT).show()
             }
