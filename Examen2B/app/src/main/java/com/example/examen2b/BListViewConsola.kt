@@ -102,18 +102,14 @@ class BListViewConsola : AppCompatActivity() {
 
                 return true
             }
-            /*R.id.op_eliminar_ ->{
-                if(eliminarConsola(idSeleccionado)){
-                    Toast.makeText(this, "Elemento eliminado", Toast.LENGTH_SHORT).show()
-                    consolas.removeAt(posicionSeleccionada)
-                    arreglo.notifyDataSetChanged()
-                } else
-                {
-                    Toast.makeText(this, "Error al eliminar el elemento", Toast.LENGTH_SHORT).show()
-                }
+            R.id.op_eliminar_ ->{
+                eliminarConsola(idSeleccionado)
+                //Toast.makeText(this, "Elemento eliminado", Toast.LENGTH_SHORT).show()
+                arreglo.removeAt(posicionSeleccionada)
+                adaptador.notifyDataSetChanged()
 
                 return true
-            }*/
+            }
             R.id.op_ver_juegos ->{
                 val intent = Intent(this, BListViewVideojuegos::class.java)
                 intent.putExtra("consolaID", idSeleccionado)
@@ -125,46 +121,6 @@ class BListViewConsola : AppCompatActivity() {
         }
 
     }
-
-    /*private fun obtenerConsolasDesdeFirestore(
-        adaptador: ArrayAdapter<BConsola>
-    ){
-        val db = Firebase.firestore
-        val consolasRefUnico = db.collection("consolas")
-        limpiarArreglo()
-        adaptador.notifyDataSetChanged()
-
-        consolasRefUnico
-            .orderBy("nombre", Query.Direction.ASCENDING)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                val nuevosElementos = ArrayList<BConsola>() // Arreglo temporal
-
-                for (consola in querySnapshot) {
-                    val nuevaConsola = BConsola(
-                        consola.data?.get("nombre") as String,
-                        consola.data?.get("fechaLanzamiento") as String?,
-                        consola.data?.get("descontinuado") as String?,
-                        consola.data?.get("cantidadMandos") as Long?,
-                        consola.data?.get("precioLanzamiento") as Double?,
-                        consola.data?.get("listaVideojuegos") as ArrayList<BVideojuego>?,
-                    )
-                    nuevosElementos.add(nuevaConsola)
-                }
-
-                // Borra los elementos existentes en el adaptador y en el arreglo
-                //adaptador.clear()
-                //arreglo.clear()
-
-                // Agrega los nuevos elementos al arreglo y al adaptador
-                arreglo.addAll(nuevosElementos)
-                adaptador.notifyDataSetChanged()
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error al obtener las consolas desde Firestore: $exception", Toast.LENGTH_SHORT).show()
-            }
-
-    }*/
 
     private fun obtenerConsolasDesdeFirestore(
         adaptador: ArrayAdapter<BConsola>
@@ -194,12 +150,25 @@ class BListViewConsola : AppCompatActivity() {
 
     }
 
-   /* private fun eliminarConsola(id: Int): Boolean {
-        val dbHelper = ESqliteHelper(this)
-        val conf = dbHelper.eliminarConsolaFormulario(id)
-        dbHelper.close()
-        return conf
-    }*/
+   private fun eliminarConsola(nombre: String) {
+       val db = Firebase.firestore
+       val consolaRef = db
+           .collection("consolas")
+
+       consolaRef
+           .document(nombre)
+           .delete()
+           .addOnCompleteListener{
+               Toast.makeText(this, "Consola eliminada con éxito.", Toast.LENGTH_SHORT).show()
+               //0finish()
+           }
+           .addOnFailureListener { exception ->
+               Toast.makeText(this, "Error al eliminar la consola en Firestore: $exception", Toast.LENGTH_SHORT).show()
+
+
+           }
+
+    }
 
 
 
@@ -218,9 +187,6 @@ class BListViewConsola : AppCompatActivity() {
         )
         arreglo.add(nuevaConsola)
     }
-
-
-
 
 
     fun irActividad(

@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -98,17 +99,13 @@ class BListViewVideojuegos : AppCompatActivity() {
                 return true
             }
 
-            /*R.id.op_eliminar_videojuego -> {
-                if (eliminarVideojuego(idVideojuegoSeleccionado)) {
-                    Toast.makeText(this, "Elemento eliminado", Toast.LENGTH_SHORT).show()
-                    videojuegos.removeAt(posicionSeleccionada)
-                    arreglo.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(this, "Error al eliminar el elemento", Toast.LENGTH_SHORT).show()
-                }
+            R.id.op_eliminar_videojuego -> {
+                eliminarVideojuego(idConsolaAux, idVideojuegoSeleccionado)
+                arreglo.removeAt(posicionSeleccionada)
+                adaptador.notifyDataSetChanged()
 
                 return true
-            }*/
+            }
 
             else -> super.onContextItemSelected(item)
         }
@@ -127,25 +124,12 @@ class BListViewVideojuegos : AppCompatActivity() {
         videojuegosRef
             .orderBy("nombre", Query.Direction.ASCENDING)
             .get()
-            .addOnSuccessListener { querySnapshot ->
-                val nuevosElementos = ArrayList<BVideojuego>() //Arreglo temporal
-
-                for (videojuego in querySnapshot) {
-                    val nuevoVideojuego = BVideojuego(
-                        videojuego.data.get("nombre") as String,
-                        videojuego.data?.get("fechaLanzamiento") as String?,
-                        videojuego.data?.get("desarrollador") as String?,
-                        videojuego.data?.get("multijugadorOnline") as String?,
-                        videojuego.data?.get("precioLanzamiento") as Double?
-                    )
-                    nuevosElementos.add(nuevoVideojuego)
+            .addOnSuccessListener {
+                limpiarArreglo()
+                for (videojuego in it) {
+                    anadirArregloVideojuego(videojuego)
                 }
 
-                adaptador.clear()
-                arreglo = nuevosElementos
-
-                // Agrega los nuevos elementos al arreglo y al adaptador
-                adaptador.addAll(nuevosElementos)
                 adaptador.notifyDataSetChanged()
 
             }
@@ -157,11 +141,48 @@ class BListViewVideojuegos : AppCompatActivity() {
                 ).show()
             }
     }
-   /* private fun eliminarVideojuego(id: Int): Boolean {
 
 
-        return
-    }*/
+    private fun eliminarVideojuego(consolaID: String, videojuegoNombre: String) {
+        // Obtiene una referencia a Firestore
+        val db = Firebase.firestore
+
+        // Crea una referencia a la colección "videojuegosDeConsola" dentro de la consola especificada por su ID
+        val videojuegosRef = db
+            .collection("consolas")
+            .document(consolaID)
+            .collection("videojuegosDeConsola")
+
+        // Borra el documento de videojuego específico por su nombre
+        videojuegosRef
+            .document(videojuegoNombre)
+            .delete()
+            .addOnCompleteListener {
+                // Cuando se completa la eliminación del videojuego, muestra un mensaje de éxito
+                Toast.makeText(this, "Videojuego eliminado con éxito.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { exception ->
+                // En caso de error al eliminar el videojuego, muestra un mensaje de error
+                Toast.makeText(this, "Error al eliminar el videojuego en Firestore: $exception", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    fun limpiarArreglo(){ arreglo.clear() }
+
+
+    fun anadirArregloVideojuego(videojuego: QueryDocumentSnapshot){
+
+        val nuevoVideojuego = BVideojuego(
+            videojuego.data.get("nombre") as String,
+            videojuego.data?.get("fechaLanzamiento") as String?,
+            videojuego.data?.get("desarrollador") as String?,
+            videojuego.data?.get("multijugadorOnline") as String?,
+            videojuego.data?.get("precioLanzamiento") as Double?
+        )
+
+        arreglo.add(nuevoVideojuego)
+    }
+
 
 
 
