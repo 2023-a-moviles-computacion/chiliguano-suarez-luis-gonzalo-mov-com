@@ -30,7 +30,6 @@ class BListViewVideojuegos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blist_view_videojuegos)
-        //EBaseDeDatos.BDatos = ESqliteHelper(this)
 
 
         var consolaID = intent.getStringExtra("consolaID")
@@ -89,20 +88,24 @@ class BListViewVideojuegos : AppCompatActivity() {
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         val posicionSeleccionada = info.position
         val videojuegoSeleccionado = arreglo[posicionSeleccionada]
-        val idVideojuegoSeleccionado = videojuegoSeleccionado.nombre
+        val idVideojuegoSeleccionado = videojuegoSeleccionado.id
 
         return when (item.itemId) {
             R.id.op_editar_videojuego -> {
                 val intent = Intent(this, EEditarVideojuego::class.java)
                 intent.putExtra("videojuegoID", idVideojuegoSeleccionado)
+                intent.putExtra("consolaID", idConsolaAux)
                 startActivity(intent)
                 return true
             }
 
             R.id.op_eliminar_videojuego -> {
-                eliminarVideojuego(idConsolaAux, idVideojuegoSeleccionado)
-                arreglo.removeAt(posicionSeleccionada)
-                adaptador.notifyDataSetChanged()
+                if (idVideojuegoSeleccionado != null) {
+                    eliminarVideojuego(idConsolaAux, idVideojuegoSeleccionado)
+                    arreglo.removeAt(posicionSeleccionada)
+                    adaptador.notifyDataSetChanged()
+                }
+
 
                 return true
             }
@@ -173,6 +176,7 @@ class BListViewVideojuegos : AppCompatActivity() {
     fun anadirArregloVideojuego(videojuego: QueryDocumentSnapshot){
 
         val nuevoVideojuego = BVideojuego(
+            videojuego.id,
             videojuego.data.get("nombre") as String,
             videojuego.data?.get("fechaLanzamiento") as String?,
             videojuego.data?.get("desarrollador") as String?,

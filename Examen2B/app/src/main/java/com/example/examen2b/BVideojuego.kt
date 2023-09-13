@@ -1,6 +1,7 @@
 package com.example.examen2b
 
 class BVideojuego(
+    var id: String,
     var nombre: String,
     var fechaLanzamiento: String?,
     var desarrollador: String?,
@@ -9,7 +10,8 @@ class BVideojuego(
 )
 {
     override fun toString(): String {
-        return  "\nNombre: ${nombre}" +
+        return  "ID: ${id}" +
+                "\nNombre: ${nombre}" +
                 "\nLanzamiento: ${fechaLanzamiento}" +
                 "\nDesarrolador: ${desarrollador}" +
                 "\nMultijugador Online: ${multijugadorOnline}" +

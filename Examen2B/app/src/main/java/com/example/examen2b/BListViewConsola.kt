@@ -92,7 +92,7 @@ class BListViewConsola : AppCompatActivity() {
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         val posicionSeleccionada = info.position
         val consolaSeleccionada = arreglo[posicionSeleccionada]
-        val idSeleccionado = consolaSeleccionada.nombre
+        val idSeleccionado = consolaSeleccionada.id
 
         return when (item.itemId){
             R.id.op_editar ->{
@@ -103,7 +103,9 @@ class BListViewConsola : AppCompatActivity() {
                 return true
             }
             R.id.op_eliminar_ ->{
-                eliminarConsola(idSeleccionado)
+                if (idSeleccionado != null) {
+                    eliminarConsola(idSeleccionado)
+                }
                 //Toast.makeText(this, "Elemento eliminado", Toast.LENGTH_SHORT).show()
                 arreglo.removeAt(posicionSeleccionada)
                 adaptador.notifyDataSetChanged()
@@ -144,19 +146,19 @@ class BListViewConsola : AppCompatActivity() {
                     adaptador.notifyDataSetChanged()
             }
 
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error al obtener las consolas desde Firestore: $exception", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al crear el videojuego: $e", Toast.LENGTH_SHORT).show()
             }
 
     }
 
-   private fun eliminarConsola(nombre: String) {
+   private fun eliminarConsola(id: String) {
        val db = Firebase.firestore
        val consolaRef = db
            .collection("consolas")
 
        consolaRef
-           .document(nombre)
+           .document(id)
            .delete()
            .addOnCompleteListener{
                Toast.makeText(this, "Consola eliminada con éxito.", Toast.LENGTH_SHORT).show()
@@ -178,12 +180,12 @@ class BListViewConsola : AppCompatActivity() {
     {
         //ciudad.id
         val nuevaConsola = BConsola(
+            consola.id,
             consola.data?.get("nombre") as String,
             consola.data?.get("fechaLanzamiento") as String?,
             consola.data?.get("descontinuado") as String?,
             consola.data?.get("cantidadMandos") as Long?,
-            consola.data?.get("precioLanzamiento") as Double?,
-            consola.data?.get("listaVideojuegos") as ArrayList<BVideojuego>?,
+            consola.data?.get("precioLanzamiento") as Double?
         )
         arreglo.add(nuevaConsola)
     }

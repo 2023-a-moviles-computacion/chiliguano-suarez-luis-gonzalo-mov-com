@@ -25,17 +25,14 @@ class ECrudConsola : AppCompatActivity() {
                 val cantidadMandos = findViewById<EditText>(R.id.input_mandos)
                 val precio = findViewById<EditText>(R.id.input_precio)
 
-                val tuListaDeVideojuegos = mutableListOf<BVideojuego>()
-
-
 
                 val nuevaConsola = BConsola(
+                    "",
                     nombre.text.toString(),
                     fechaLanzamiento.text.toString(),
                     descontinuado.text.toString(),
                     cantidadMandos.text.toString().toLong(),
                     precio.text.toString().toDouble(),
-                    tuListaDeVideojuegos
                 )
 
                 agregarConsolaAFirestore(nuevaConsola)
@@ -57,10 +54,20 @@ class ECrudConsola : AppCompatActivity() {
             "fechaLanzamiento" to consola.fechaLanzamiento,
             "descontinuado" to consola.descontinuado,
             "cantidadMandos" to consola.cantidadMandos,
-            "precioLanzamiento" to consola.precioLanzamiento,
-            "videojuegosDeConsola" to consola.listaVideojuegos
+            "precioLanzamiento" to consola.precioLanzamiento
         )
-        consolas.document(consola.nombre).set(data)
+        consolas.add(data)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Consola creada con éxito.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(
+                    this,
+                    "Error al agregar la consola en Firestore: $exception",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
     }
 

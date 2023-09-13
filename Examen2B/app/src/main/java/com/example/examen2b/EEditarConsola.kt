@@ -6,35 +6,75 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class EEditarConsola : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {/*
+    var idConsolaAux = ""
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_eeditar_consola)
-        EBaseDeDatos.BDatos = ESqliteHelper(this)
 
-        val consolaID = intent.getIntExtra("consolaID", -1)
+        //Obtener el consolaID de los extras del intent
+        val consolaId = intent.getStringExtra("consolaID")
 
-        val botonEditarBDD = findViewById<Button>(R.id.btn_editar_consola)
-        botonEditarBDD
+        if (consolaId != null) {
+            if (consolaId.isEmpty()){
+                Toast.makeText(this, "Error: ID de la consola no proporcionado.", Toast.LENGTH_SHORT).show()
+                finish()
+                return
+            }
+            idConsolaAux = consolaId
+        }
+
+        val botonEditarConsola = findViewById<Button>(R.id.btn_editar_consola)
+        botonEditarConsola
             .setOnClickListener {
-                val nombre = findViewById<EditText>(R.id.input_nombre_editar)
-                val fechaLanzamiento = findViewById<EditText>(R.id.input_lanzamiento_editar)
-                val descontinuado = findViewById<EditText>(R.id.input_descontinuado_editar)
-                val cantidadMandos = findViewById<EditText>(R.id.id_mandos_editar)
-                val precio = findViewById<EditText>(R.id.input_precio_editar)
-                EBaseDeDatos.BDatos!!.actualizarConsolaFormulario(
-                    nombre.text.toString(),
-                    fechaLanzamiento.text.toString(),
-                    descontinuado.text.toString(),
-                    cantidadMandos.text.toString().toInt(),
-                    precio.text.toString().toDouble(),
-                    consolaID
+                val nuevoNombre = findViewById<EditText>(R.id.input_nombre_editar)
+                val nuevaFechaLanzamiento = findViewById<EditText>(R.id.input_lanzamiento_editar)
+                val nuevoDescontinuado = findViewById<EditText>(R.id.input_descontinuado_editar)
+                val nuevoCantidadMandos = findViewById<EditText>(R.id.id_mandos_editar)
+                val nuevoPrecio = findViewById<EditText>(R.id.input_precio_editar)
+
+                val consolaEditada = BConsola(
+                    "",
+                    nuevoNombre.text.toString(),
+                    nuevaFechaLanzamiento.text.toString(),
+                    nuevoDescontinuado.text.toString(),
+                    nuevoCantidadMandos.text.toString().toLong(),
+                    nuevoPrecio.text.toString().toDouble()
                 )
 
                 // Notificar al adaptador que los datos han cambiado
+                actualizarConsolaAFirestore(consolaEditada, idConsolaAux)
                 actualizarListaConsolas()
             }
+    }
+
+    private fun actualizarConsolaAFirestore(consola: BConsola, consolaID: String) {
+        // Crea un documento sin un ID específico (Firestore generará un ID automático)
+        val db = Firebase.firestore
+        val consolas = db.collection("consolas")
+
+        val data = hashMapOf(
+            "nombre" to consola.nombre,
+            "fechaLanzamiento" to consola.fechaLanzamiento,
+            "descontinuado" to consola.descontinuado,
+            "cantidadMandos" to consola.cantidadMandos,
+            "precioLanzamiento" to consola.precioLanzamiento
+        )
+
+        consolas.document(consolaID).update(data as Map<String, Any>)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Consola editada con éxito.", Toast.LENGTH_SHORT).show()
+                //0finish()
+            }
+            .addOnFailureListener{exception ->
+                Toast.makeText(this, "Error al editar la consola en Firestore: $exception", Toast.LENGTH_SHORT).show()
+
+            }
+
     }
 
     private fun actualizarListaConsolas() {
@@ -48,6 +88,6 @@ class EEditarConsola : AppCompatActivity() {
             }
         } else{
             finish()
-        }*/
+        }
     }
 }

@@ -39,6 +39,7 @@ class ECrudVideojuego : AppCompatActivity() {
                 val precio = findViewById<EditText>(R.id.input_precio_videojuego)
 
                 val nuevoVideojuego = BVideojuego(
+                    "",
                     nombre.text.toString(),
                     fechaLanzamiento.text.toString(),
                     desarrollador.text.toString(),
@@ -71,8 +72,7 @@ class ECrudVideojuego : AppCompatActivity() {
 
         consolasRef.document(consolaID)
             .collection("videojuegosDeConsola")
-            .document(videojuego.nombre)
-            .set(data)
+            .add(data)
             .addOnSuccessListener {
                 Toast.makeText(this, "Videojuego creado con éxito.", Toast.LENGTH_SHORT).show()
                 finish()
