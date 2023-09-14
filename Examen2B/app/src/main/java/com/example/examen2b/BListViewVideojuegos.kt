@@ -146,7 +146,7 @@ class BListViewVideojuegos : AppCompatActivity() {
     }
 
 
-    private fun eliminarVideojuego(consolaID: String, videojuegoNombre: String) {
+    private fun eliminarVideojuego(consolaID: String, videojuegoID: String) {
         // Obtiene una referencia a Firestore
         val db = Firebase.firestore
 
@@ -158,7 +158,7 @@ class BListViewVideojuegos : AppCompatActivity() {
 
         // Borra el documento de videojuego específico por su nombre
         videojuegosRef
-            .document(videojuegoNombre)
+            .document(videojuegoID)
             .delete()
             .addOnCompleteListener {
                 // Cuando se completa la eliminación del videojuego, muestra un mensaje de éxito
